@@ -16,6 +16,10 @@ cd bookstore-vok
 
 The Bookstore Example will be running on http://localhost:8080
 
+## Live Demo
+
+The [Live Demo of Bookstore-VOK](https://bookstore-vok.herokuapp.com/) is running on Heroku.
+
 ## Prerequisites
 
 The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
