@@ -1,10 +1,20 @@
+[![Powered By Vaadin on Kotlin](http://vaadinonkotlin.eu/iconography/vok_badge.svg)](http://vaadinonkotlin.eu)
 [![Gitter](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/vaadin-flow/Lobby#?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge)
+[![Build Status](https://travis-ci.org/mvysny/bookstore-vok.svg?branch=master)](https://travis-ci.org/mvysny/bookstore-vok)
 
 # Bookstore App Starter for Vaadin Flow
 
-A project example for a Vaadin application that only requires a Servlet 3.1 container to run (no other JEE dependencies). The UI is built with Java only.
+A project example for a Vaadin application that only requires a Servlet 3.1 container to run (no other JEE dependencies). The UI is built with Kotlin only.
 
-The easiest way of using it is via [https://vaadin.com/start](https://vaadin.com/start) - you can choose the package naming you want.
+The easiest way of using it is simply to git-clone this repository:
+
+```bash
+git clone https://github.com/mvysny/bookstore-vok
+cd bookstore-vok
+./gradlew clean appRun
+```
+
+The Bookstore Example will be running on http://localhost:8080
 
 ## Prerequisites
 
