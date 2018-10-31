@@ -22,36 +22,19 @@ The [Live Demo of Bookstore-VOK](https://bookstore-vok.herokuapp.com/) is runnin
 
 ## Prerequisites
 
-The project can be imported into the IDE of your choice, with Java 8 installed, as a Maven project.
-
-## Project Structure
-
-The project consists of the following three modules:
-
-- parent project: common metadata and configuration
-- bookstore-starter-flow-ui: main application module, development time
-- bookstore-starter-flow-backend: POJO classes and mock services being used in ui
+The project can be imported into the IDE of your choice, with Java 8 installed, as a Gradle/Kotlin project.
 
 ## Workflow
 
-To compile the entire project, run "mvn install" in the parent project.
+To compile the entire project, run `./gradlew` in the parent project.
 
 Other basic workflow steps:
 
 - getting started
 - compiling the whole project
-  - run `mvn install` in parent project
+  - run `./gradlew` in parent project
 - developing the application
-  - edit code in the ui module
-  - run `mvn jetty:run` in ui module
-  - open http://localhost:8080/
-- creating a production mode war
-  - run `mvn package -Dvaadin.productionMode ` in the ui module or in the parent module
-- running in production mode
-  - run `mvn jetty:run -Dvaadin.productionMode` in ui module
+  - edit code
+  - run `./gradlew appRun`
   - open http://localhost:8080/
 
-### Branching information:
-* `master` the latest version of the starter, using latest platform snapshot
-* `V10` the version for Vaadin 10
-* `V11` the version for Vaadin 11
