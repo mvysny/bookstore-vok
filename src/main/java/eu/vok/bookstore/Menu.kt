@@ -80,13 +80,16 @@ class Menu : FlexLayout() {
     }
 }
 
+@Deprecated("remove when karibu-dsl is v-bumped")
 fun ClassList.flip(className: String) {
     set(className, !contains(className))
 }
 
+@Deprecated("remove when karibu-dsl is v-bumped")
 @VaadinDsl
 fun (@VaadinDsl HasComponents).tabs(block: (@VaadinDsl Tabs).() -> Unit = {}) = init(Tabs(), block)
 
+@Deprecated("remove when karibu-dsl is v-bumped")
 @VaadinDsl
 fun (@VaadinDsl Tabs).tab(block: (@VaadinDsl Tab).() -> Unit = {}) = init(Tab(), block)
 
