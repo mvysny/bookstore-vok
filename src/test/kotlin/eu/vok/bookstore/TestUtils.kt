@@ -8,6 +8,8 @@ import com.vaadin.flow.component.textfield.TextField
 import eu.vok.bookstore.crud.SampleCrudView
 
 fun DynaNodeGroup.usingUI(loginAs: String? = "user") {
+    beforeGroup { Bootstrap().contextInitialized(null) }
+    afterGroup { Bootstrap().contextDestroyed(null) }
     beforeEach {
         MockVaadin.setup(routes = Routes().autoDiscoverViews("eu.vok.bookstore"))
         if (loginAs != null) {
