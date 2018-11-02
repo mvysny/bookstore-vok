@@ -1,6 +1,7 @@
 package eu.vok.bookstore.crud
 
 import com.github.vok.karibudsl.flow.*
+import com.github.vokorm.findAll
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Key
@@ -28,7 +29,6 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
 
     private val content: VerticalLayout
 
-    private lateinit var category: CheckboxGroup<Category>
     private lateinit var save: Button
     private lateinit var discard: Button
     private lateinit var delete: Button
@@ -108,8 +108,9 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
                 className = "vaadin-label"
             }
 
-            category = checkBoxGroup {
+            checkBoxGroup<Category> {
                 setId("category")
+                setItems(Category.findAll())
                 content.style.set("flex-direction", "column")
                         .set("margin", "0")
                 categoryLabel.setFor(this)
@@ -153,10 +154,6 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
         }
 
         addKeyListener(Key.ESCAPE) { listener.cancel() }
-    }
-
-    fun setCategories(categories: Collection<Category>) {
-        category.setItems(categories)
     }
 
     fun editProduct(product: Product?) {

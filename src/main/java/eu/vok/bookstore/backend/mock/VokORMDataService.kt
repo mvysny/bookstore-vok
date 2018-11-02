@@ -14,10 +14,6 @@ import eu.vok.bookstore.backend.data.Product
 @Deprecated("inline")
 object VokORMDataService : DataService {
 
-    override fun getAllProducts(): List<Product> = Product.findAll()
-
-    override fun getAllCategories(): List<Category> = Category.findAll()
-
     override fun updateProduct(p: Product) {
         p.save()
     }

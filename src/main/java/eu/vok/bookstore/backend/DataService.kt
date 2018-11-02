@@ -12,12 +12,6 @@ import eu.vok.bookstore.backend.mock.VokORMDataService
 @Deprecated("inline")
 interface DataService : Serializable {
 
-    @Deprecated("Use EntityDataProvider")
-    fun getAllProducts(): Collection<Product>
-
-    @Deprecated("Use EntityDataProvider")
-    fun getAllCategories(): Collection<Category>
-
     fun updateProduct(p: Product)
 
     fun deleteProduct(productId: Int)

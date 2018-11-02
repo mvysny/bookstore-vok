@@ -45,7 +45,6 @@ public class SampleCrudView extends HorizontalLayout
                 event -> viewLogic.rowSelected(event.getValue()));
 
         form = new ProductForm(viewLogic);
-        form.setCategories(DataService.Companion.get().getAllCategories());
 
         VerticalLayout barAndGridLayout = new VerticalLayout();
         barAndGridLayout.add(topLayout);
