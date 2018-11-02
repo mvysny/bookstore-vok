@@ -11,6 +11,10 @@ import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
 import eu.vok.bookstore.crud.SampleCrudView
 
+/**
+ * Makes sure that the database is initialized and cleared before every test is ran.
+ * You can now create your own instances of [Product] and [Category] right from the test.
+ */
 fun DynaNodeGroup.usingDB() {
     beforeGroup { Bootstrap().contextInitialized(null) }
     afterGroup { Bootstrap().contextDestroyed(null) }
@@ -25,6 +29,10 @@ fun DynaNodeGroup.usingDB() {
     afterEach { cleanupDb() }
 }
 
+/**
+ * Makes sure that the database is initialized (calls [usingDB]). Moreover, makes sure that Vaadin is properly mocked
+ * and optionally given user is logged in (when [loginAs] is not null).
+ */
 fun DynaNodeGroup.usingUI(loginAs: String? = "user") {
     usingDB()
 
