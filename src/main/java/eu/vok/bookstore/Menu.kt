@@ -8,9 +8,7 @@ import com.vaadin.flow.component.icon.Icon
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.FlexLayout
-import com.vaadin.flow.component.tabs.Tab
 import com.vaadin.flow.component.tabs.Tabs
-import com.vaadin.flow.dom.ClassList
 import com.vaadin.flow.server.VaadinServletService
 import com.vaadin.flow.server.VaadinSession
 import kotlin.reflect.KClass
@@ -79,19 +77,6 @@ class Menu : FlexLayout() {
         }
     }
 }
-
-@Deprecated("remove when karibu-dsl is v-bumped")
-fun ClassList.flip(className: String) {
-    set(className, !contains(className))
-}
-
-@Deprecated("remove when karibu-dsl is v-bumped")
-@VaadinDsl
-fun (@VaadinDsl HasComponents).tabs(block: (@VaadinDsl Tabs).() -> Unit = {}) = init(Tabs(), block)
-
-@Deprecated("remove when karibu-dsl is v-bumped")
-@VaadinDsl
-fun (@VaadinDsl Tabs).tab(block: (@VaadinDsl Tab).() -> Unit = {}) = init(Tab(), block)
 
 @VaadinDsl
 fun (@VaadinDsl HasComponents).menu(block: (@VaadinDsl Menu).() -> Unit = {}) = init(Menu(), block)
