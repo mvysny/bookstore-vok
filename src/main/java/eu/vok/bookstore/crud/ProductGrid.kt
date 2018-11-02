@@ -22,7 +22,7 @@ class ProductGrid : Grid<Product>() {
 
         addColumnFor(Product::productName, sortable = true) {
             setHeader("Product name")
-            setFlexGrow(20)
+            flexGrow = 20
         }
 
         // Format and add " €" to price
@@ -67,7 +67,7 @@ class ProductGrid : Grid<Product>() {
         // Show all categories the product is in, separated by commas
         addColumn { formatCategories(it) }.apply {
             setHeader("Category")
-            setFlexGrow(12)
+            flexGrow = 12
         }
 
         dataProvider = Product.dataProvider

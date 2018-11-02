@@ -9,6 +9,7 @@ import eu.vok.bookstore.backend.mock.VokORMDataService
 /**
  * Back-end service interface for retrieving and updating product data.
  */
+@Deprecated("inline")
 interface DataService : Serializable {
 
     @Deprecated("Use EntityDataProvider")

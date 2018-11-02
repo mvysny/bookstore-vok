@@ -11,6 +11,7 @@ import eu.vok.bookstore.backend.data.Product
  * Mock data model. This implementation has very simplistic locking and does not
  * notify users of modifications.
  */
+@Deprecated("inline")
 object VokORMDataService : DataService {
 
     override fun getAllProducts(): List<Product> = Product.findAll()
