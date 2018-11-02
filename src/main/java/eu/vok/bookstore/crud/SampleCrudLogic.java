@@ -3,8 +3,8 @@ package eu.vok.bookstore.crud;
 import com.vaadin.flow.component.UI;
 import eu.vok.bookstore.authentication.AccessControl;
 import eu.vok.bookstore.authentication.AccessControlFactory;
-import eu.vok.bookstore.backend.DataService;
 import eu.vok.bookstore.backend.data.Product;
+import eu.vok.bookstore.backend.mock.MockDataGenerator;
 
 import java.io.Serializable;
 
@@ -73,7 +73,7 @@ public class SampleCrudLogic implements Serializable, FormListener<Product> {
     }
 
     private Product findProduct(int productId) {
-        return DataService.Companion.get().getProductById(productId);
+        return MockDataGenerator.INSTANCE.getProductById(productId);
     }
 
     public void save(Product product) {

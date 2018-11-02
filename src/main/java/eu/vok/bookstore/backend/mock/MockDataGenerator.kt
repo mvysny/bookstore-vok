@@ -2,6 +2,7 @@ package eu.vok.bookstore.backend.mock
 
 import com.github.vokorm.db
 import com.github.vokorm.findAll
+import com.github.vokorm.findById
 import java.math.BigDecimal
 import java.util.HashSet
 import java.util.Random
@@ -71,4 +72,6 @@ object MockDataGenerator {
                 + word2[random.nextInt(word2.size)])
     }
 
+    @Deprecated("remove")
+    fun getProductById(productId: Int): Product? = Product.findById(productId)
 }
