@@ -35,7 +35,7 @@ object MockDataGenerator {
     private fun createProducts(categories: List<Category>) {
         db {
             for (i in 0..99) {
-                createProduct(categories).save()
+                createProduct(categories)
             }
         }
     }
@@ -51,6 +51,7 @@ object MockDataGenerator {
             p.stockCount = random.nextInt(523)
         }
 
+        p.save()
         p.category = getCategory(categories, 1, 2)
         return p
     }
