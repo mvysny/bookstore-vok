@@ -1,6 +1,8 @@
 package eu.vok.bookstore.crud
 
+import com.github.vok.framework.sql2o.vaadin.VokDataProvider
 import com.github.vok.framework.sql2o.vaadin.dataProvider
+import com.github.vok.framework.sql2o.vaadin.setFilter
 import com.github.vok.karibudsl.flow.addColumnFor
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
@@ -78,4 +80,13 @@ class ProductGrid : Grid<Product>() {
     }
 
     private fun formatCategories(product: Product): String = product.category.map { it.name!! }.sorted().joinToString()
+
+    fun setFilter(filter: String) {
+        val dp = dataProvider as VokDataProvider<Product>
+        if (filter.isBlank()) {
+            dp.setFilter(null)
+        } else {
+            dp.setFilter { (Product::productName ilike filter.trim()) or ("availability ilike :a"("a" to filter.trim() + "%")) }
+        }
+    }
 }

@@ -6,6 +6,7 @@ import com.vaadin.flow.component.notification.Notification;
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout;
 import com.vaadin.flow.component.orderedlayout.VerticalLayout;
 import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.data.value.ValueChangeMode;
 import com.vaadin.flow.router.BeforeEvent;
 import com.vaadin.flow.router.HasUrlParameter;
 import com.vaadin.flow.router.OptionalParameter;
@@ -65,7 +66,8 @@ public class SampleCrudView extends HorizontalLayout
         filter = new TextField();
         filter.setPlaceholder("Filter name, availability or category");
         // Apply the filter to grid's data provider. TextField value is never null
-        filter.addValueChangeListener(event -> dataProvider.setFilter(event.getValue()));
+        filter.addValueChangeListener(event -> grid.setFilter(event.getValue()));
+        filter.setValueChangeMode(ValueChangeMode.EAGER);
 
         newProduct = new Button("New product");
         newProduct.getElement().getThemeList().add("primary");
