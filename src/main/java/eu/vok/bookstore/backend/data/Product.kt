@@ -37,9 +37,7 @@ data class Product(
     set(value) {
         if (id != null) {
             db {
-                con.createQuery("DELETE FROM Product_Category WHERE product_id = :id")
-                        .addParameter("id", id!!)
-                        .executeUpdate()
+                ProductCategory.deleteForProduct(id!!)
                 for (category in value) {
                     con.createQuery("INSERT INTO Product_Category (product_id, category_id) values(:pid, :cid)")
                             .addParameter("pid", id!!)
@@ -47,6 +45,13 @@ data class Product(
                             .executeUpdate()
                 }
             }
+        }
+    }
+
+    override fun delete() {
+        db {
+            ProductCategory.deleteForProduct(id!!)
+            super.delete()
         }
     }
 

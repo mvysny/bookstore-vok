@@ -13,8 +13,16 @@ data class Category(
         @field:NotNull
         var name: String? = null
 ) : Entity<Int>, Serializable {
+    override fun delete() {
+        db {
+            ProductCategory.deleteForCategory(id!!)
+            super.delete()
+        }
+    }
+
     companion object : Dao<Category> {
-        fun getAllForProduct(id: Int) = db {
+
+        fun getAllForProduct(id: Int): List<Category> = db {
             con.createQuery("SELECT c.id, c.name FROM Category c, Product_Category pc WHERE c.id = pc.category_id and pc.product_id = :id")
                     .addParameter("id", id)
                     .executeAndFetch(Category::class.java)
