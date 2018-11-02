@@ -5,5 +5,3 @@ create TABLE Product (
   STOCK_COUNT int,
   availability varchar(20) not null
 );
-create UNIQUE INDEX idx_product_name
-  ON Product (PRODUCT_NAME);

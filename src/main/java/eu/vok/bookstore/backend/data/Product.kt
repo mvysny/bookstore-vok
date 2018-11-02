@@ -3,6 +3,7 @@ package eu.vok.bookstore.backend.data
 import com.github.vokorm.As
 import com.github.vokorm.Dao
 import com.github.vokorm.Entity
+import com.github.vokorm.db
 import java.io.Serializable
 import java.math.BigDecimal
 
@@ -11,7 +12,6 @@ import javax.validation.constraints.NotNull
 import javax.validation.constraints.Size
 
 data class Product(
-        @field:NotNull
         override var id: Int? = null,
 
         @field:NotNull
@@ -22,8 +22,6 @@ data class Product(
         @field:Min(0)
         var price: BigDecimal = BigDecimal.ZERO,
 
-        var category: Set<Category>? = null,
-
         @field:Min(value = 0, message = "Can't have negative amount in stock")
         @As("STOCK_COUNT")
         var stockCount: Int? = 0,
@@ -33,6 +31,24 @@ data class Product(
 ) : Entity<Int>, Serializable {
     val isNewProduct: Boolean
         get() = id == null
+
+    var category: Set<Category>
+    get() = if (id == null) emptySet() else Category.getAllForProduct(id!!).toSet()
+    set(value) {
+        if (id != null) {
+            db {
+                con.createQuery("DELETE FROM Product_Category WHERE product_id = :id")
+                        .addParameter("id", id!!)
+                        .executeUpdate()
+                for (category in value) {
+                    con.createQuery("INSERT INTO Product_Category (product_id, category_id) values(:pid, :cid)")
+                            .addParameter("pid", id!!)
+                            .addParameter("cid", category.id!!)
+                            .executeUpdate()
+                }
+            }
+        }
+    }
 
     companion object : Dao<Product>
 }

@@ -19,8 +19,8 @@ public class MockDataService extends DataService {
     private int nextProductId = 0;
 
     private MockDataService() {
-        categories = MockDataGenerator.createCategories();
-        products = MockDataGenerator.createProducts(categories);
+        categories = MockDataGenerator.INSTANCE.createCategories();
+        products = MockDataGenerator.INSTANCE.createProducts(categories);
         nextProductId = products.size() + 1;
     }
 
