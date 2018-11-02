@@ -4,6 +4,9 @@ import com.github.vokorm.DaoOfAny
 import com.github.vokorm.Table
 import com.github.vokorm.db
 
+/**
+ * A join table, to maintain many-to-many relationship between [Category] and [Product].
+ */
 @Table("Product_Category")
 data class ProductCategory(var product_id: Int? = null, var category_id: Int? = null) {
     companion object : DaoOfAny<ProductCategory> {

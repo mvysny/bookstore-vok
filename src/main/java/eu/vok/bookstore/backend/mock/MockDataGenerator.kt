@@ -18,7 +18,7 @@ object MockDataGenerator {
 
     private val word2 = arrayOf("gardening", "living a healthy life", "designing tree houses", "home security", "intergalaxy travel", "meditation", "ice hockey", "children's education", "computer programming", "Vaadin TreeTable", "winter bathing", "playing the cello", "dummies", "rubber bands", "feeling down", "debugging", "running barefoot", "speaking to a big audience", "creating software", "giant needles", "elephants", "keeping your wife happy")
 
-    fun createCategories(): List<Category> {
+    private fun createCategories(): List<Category> {
         db {
             for (name in categoryNames) {
                 Category(name = name).save()
@@ -27,13 +27,16 @@ object MockDataGenerator {
         return Category.findAll()
     }
 
-    fun createProducts(categories: List<Category>): List<Product> {
+    fun generate() {
+        createProducts(createCategories())
+    }
+
+    private fun createProducts(categories: List<Category>) {
         db {
             for (i in 0..99) {
                 createProduct(categories).save()
             }
         }
-        return Product.findAll()
     }
 
     private fun createProduct(categories: List<Category>): Product {

@@ -13,7 +13,7 @@ public class ProductDataProvider extends ListDataProvider<Product> {
     private String filterText = "";
 
     public ProductDataProvider() {
-        super(DataService.get().getAllProducts());
+        super(DataService.Companion.get().getAllProducts());
     }
 
     /**
@@ -25,7 +25,7 @@ public class ProductDataProvider extends ListDataProvider<Product> {
     public void save(Product product) {
         boolean newProduct = product.isNewProduct();
 
-        DataService.get().updateProduct(product);
+        DataService.Companion.get().updateProduct(product);
         if (newProduct) {
             refreshAll();
         } else {
@@ -40,7 +40,7 @@ public class ProductDataProvider extends ListDataProvider<Product> {
      *            the product to be deleted
      */
     public void delete(Product product) {
-        DataService.get().deleteProduct(product.getId());
+        DataService.Companion.get().deleteProduct(product.getId());
         refreshAll();
     }
 

@@ -73,7 +73,7 @@ public class SampleCrudLogic implements Serializable, FormListener<Product> {
     }
 
     private Product findProduct(int productId) {
-        return DataService.get().getProductById(productId);
+        return DataService.Companion.get().getProductById(productId);
     }
 
     public void save(Product product) {

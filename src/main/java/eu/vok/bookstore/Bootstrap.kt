@@ -3,6 +3,7 @@ package eu.vok.bookstore
 import com.github.vok.framework.VaadinOnKotlin
 import com.github.vok.framework.sql2o.dataSource
 import com.github.vok.framework.sql2o.dataSourceConfig
+import eu.vok.bookstore.backend.mock.MockDataGenerator
 import org.flywaydb.core.Flyway
 import org.h2.Driver
 import org.slf4j.LoggerFactory
@@ -47,6 +48,8 @@ class Bootstrap: ServletContextListener {
 
         // pre-populates the database with a demo data
         log.info("Populating database with testing data")
+        MockDataGenerator.generate()
+
         log.info("Initialization complete")
     }
 
