@@ -72,6 +72,4 @@ object MockDataGenerator {
                 + word2[random.nextInt(word2.size)])
     }
 
-    @Deprecated("remove")
-    fun getProductById(productId: Int): Product? = Product.findById(productId)
 }
