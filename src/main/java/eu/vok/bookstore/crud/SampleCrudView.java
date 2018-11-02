@@ -41,7 +41,6 @@ public class SampleCrudView extends HorizontalLayout
         HorizontalLayout topLayout = createTopBar();
 
         grid = new ProductGrid();
-        grid.setDataProvider(dataProvider);
         grid.asSingleSelect().addValueChangeListener(
                 event -> viewLogic.rowSelected(event.getValue()));
 
