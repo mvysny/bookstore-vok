@@ -15,6 +15,7 @@ import com.vaadin.flow.router.RouteAlias;
 import eu.vok.bookstore.MainLayout;
 import eu.vok.bookstore.backend.DataService;
 import eu.vok.bookstore.backend.data.Product;
+import eu.vok.bookstore.backend.mock.VokORMDataService;
 
 /**
  * A view for performing create-read-update-delete operations on products.
@@ -34,8 +35,6 @@ public class SampleCrudView extends HorizontalLayout
 
     private SampleCrudLogic viewLogic = new SampleCrudLogic(this);
     private Button newProduct;
-
-    private ProductDataProvider dataProvider = new ProductDataProvider();
 
     public SampleCrudView() {
         setSizeFull();
@@ -108,11 +107,18 @@ public class SampleCrudView extends HorizontalLayout
     }
 
     public void updateProduct(Product product) {
-        dataProvider.save(product);
+        final boolean newProduct = product.isNewProduct();
+        VokORMDataService.INSTANCE.updateProduct(product);
+        if (newProduct) {
+            grid.getDataProvider().refreshAll();
+        } else {
+            grid.getDataProvider().refreshItem(product);
+        }
     }
 
     public void removeProduct(Product product) {
-        dataProvider.delete(product);
+        DataService.Companion.get().deleteProduct(product.getId());
+        grid.getDataProvider().refreshAll();
     }
 
     public void editProduct(Product product) {
