@@ -12,12 +12,12 @@ import java.io.Serializable;
  * This class provides an interface for the logical operations between the CRUD
  * view, its parts like the product editor form and the data source, including
  * fetching and saving products.
- *
+ * <p>
  * Having this separate from the view makes it easier to test various parts of
  * the system separately, and to e.g. provide alternative views for the same
  * data.
  */
-public class SampleCrudLogic implements Serializable {
+public class SampleCrudLogic implements Serializable, FormListener<Product> {
 
     private SampleCrudView view;
 
@@ -26,7 +26,7 @@ public class SampleCrudLogic implements Serializable {
     }
 
     public void init() {
-        editProduct(null);
+        edit(null);
         // Hide and disable if not admin
         if (!AccessControlFactory.getInstance().createAccessControl()
                 .isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
@@ -34,7 +34,7 @@ public class SampleCrudLogic implements Serializable {
         }
     }
 
-    public void cancelProduct() {
+    public void cancel() {
         setFragmentParameter("");
         view.clearSelection();
     }
@@ -76,7 +76,7 @@ public class SampleCrudLogic implements Serializable {
         return DataService.get().getProductById(productId);
     }
 
-    public void saveProduct(Product product) {
+    public void save(Product product) {
         boolean newProduct = product.isNewProduct();
         view.clearSelection();
         view.updateProduct(product);
@@ -85,14 +85,18 @@ public class SampleCrudLogic implements Serializable {
                 + (newProduct ? " created" : " updated"));
     }
 
-    public void deleteProduct(Product product) {
+    public void delete(Product product) {
         view.clearSelection();
         view.removeProduct(product);
         setFragmentParameter("");
         view.showSaveNotification(product.getProductName() + " removed");
     }
 
-    public void editProduct(Product product) {
+    public void discardChanges(Product product) {
+        edit(product);
+    }
+
+    public void edit(Product product) {
         if (product == null) {
             setFragmentParameter("");
         } else {
@@ -110,7 +114,7 @@ public class SampleCrudLogic implements Serializable {
     public void rowSelected(Product product) {
         if (AccessControlFactory.getInstance().createAccessControl()
                 .isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
-            editProduct(product);
+            edit(product);
         }
     }
 }

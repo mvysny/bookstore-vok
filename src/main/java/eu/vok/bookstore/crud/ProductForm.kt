@@ -24,7 +24,7 @@ import java.util.*
 /**
  * A form for editing a single product.
  */
-class ProductForm(private val viewLogic: SampleCrudLogic) : Div() {
+class ProductForm(private val listener: FormListener<Product>) : Div() {
 
     private val content: VerticalLayout
 
@@ -33,7 +33,7 @@ class ProductForm(private val viewLogic: SampleCrudLogic) : Div() {
     private lateinit var discard: Button
     private lateinit var delete: Button
     private val binder = BeanValidationBinder(Product::class.java)
-    private var currentProduct: Product? = null
+    private lateinit var currentProduct: Product
 
     private class PriceConverter : StringToBigDecimalConverter(BigDecimal.ZERO, "Cannot convert value to a number.") {
 
@@ -119,30 +119,28 @@ class ProductForm(private val viewLogic: SampleCrudLogic) : Div() {
             save = button("Save") {
                 width = "100%"; setPrimary()
                 onLeftClick {
-                    if (currentProduct != null && binder.writeBeanIfValid(currentProduct!!)) {
-                        viewLogic.saveProduct(currentProduct)
+                    if (binder.writeBeanIfValid(currentProduct)) {
+                        listener.save(currentProduct)
                     }
                 }
             }
 
             discard = button("Discard changes") {
                 width = "100%"
-                onLeftClick { viewLogic.editProduct(currentProduct) }
+                onLeftClick { listener.discardChanges(currentProduct) }
             }
 
             delete = button("Delete") {
                 width = "100%"; setPrimary()
                 element.themeList.add("error")
                 onLeftClick {
-                    if (currentProduct != null) {
-                        viewLogic.deleteProduct(currentProduct)
-                    }
+                    listener.delete(currentProduct)
                 }
             }
 
             button("Cancel") {
                 width = "100%"
-                addClickListener { viewLogic.cancelProduct() }
+                addClickListener { listener.cancel() }
             }
         }
 
@@ -154,7 +152,7 @@ class ProductForm(private val viewLogic: SampleCrudLogic) : Div() {
             discard.isEnabled = hasChanges
         }
 
-        addKeyListener(Key.ESCAPE) { viewLogic.cancelProduct() }
+        addKeyListener(Key.ESCAPE) { listener.cancel() }
     }
 
     fun setCategories(categories: Collection<Category>) {
@@ -170,6 +168,17 @@ class ProductForm(private val viewLogic: SampleCrudLogic) : Div() {
         currentProduct = product
         binder.readBean(product)
     }
+}
+
+interface FormListener<B> {
+    fun save(bean: B)
+    fun discardChanges(bean: B)
+    /**
+     * Requests to cancel the editing of the bean. The listener should hide the form.
+     */
+    fun cancel()
+
+    fun delete(bean: B)
 }
 
 @VaadinDsl
