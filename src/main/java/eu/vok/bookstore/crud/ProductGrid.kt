@@ -3,10 +3,14 @@ package eu.vok.bookstore.crud
 import com.github.vok.framework.sql2o.vaadin.VokDataProvider
 import com.github.vok.framework.sql2o.vaadin.dataProvider
 import com.github.vok.framework.sql2o.vaadin.setFilter
+import com.github.vok.karibudsl.flow.VaadinDsl
 import com.github.vok.karibudsl.flow.addColumnFor
+import com.github.vok.karibudsl.flow.init
+import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
 import eu.vok.bookstore.backend.data.Product
+import org.vaadin.pekka.CheckboxGroup
 import java.text.DecimalFormat
 
 /**
@@ -90,3 +94,6 @@ class ProductGrid : Grid<Product>() {
         }
     }
 }
+
+@VaadinDsl
+fun (@VaadinDsl HasComponents).productGrid(block: (@VaadinDsl ProductGrid).() -> Unit = {}) = init(ProductGrid(), block)

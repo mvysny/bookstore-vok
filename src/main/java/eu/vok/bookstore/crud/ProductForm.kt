@@ -184,3 +184,6 @@ fun <T : Any?> (@VaadinDsl HasComponents).checkBoxGroup(block: (@VaadinDsl Check
 fun Component.addKeyListener(key: Key, listener: () -> Unit) {
     element.addEventListener("keydown") { listener() }.filter = "event.key == '${key.keys[0]}'"
 }
+
+@VaadinDsl
+fun (@VaadinDsl HasComponents).productForm(listener: FormListener<Product>, block: (@VaadinDsl ProductForm).() -> Unit = {}) = init(ProductForm(listener), block)
