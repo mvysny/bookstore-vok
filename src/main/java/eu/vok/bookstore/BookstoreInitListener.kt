@@ -3,6 +3,7 @@ package eu.vok.bookstore
 import com.github.vok.framework.VaadinOnKotlin
 import com.github.vok.framework.flow.Session
 import com.github.vok.security.loggedInUserResolver
+import com.vaadin.flow.router.InternalServerError
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
 import eu.vok.bookstore.authentication.LoginScreen
@@ -21,7 +22,9 @@ class BookstoreInitListener : VaadinServiceInitListener {
                 if (!Session.loginManager.isLoggedIn && enterEvent.navigationTarget != LoginScreen::class.java) {
                     enterEvent.rerouteTo(LoginScreen::class.java)
                 } else {
-                    VaadinOnKotlin.loggedInUserResolver!!.checkPermissionsOnClass(enterEvent.navigationTarget)
+                    if (enterEvent.navigationTarget != InternalServerError::class.java) {
+                        VaadinOnKotlin.loggedInUserResolver!!.checkPermissionsOnClass(enterEvent.navigationTarget)
+                    }
                 }
             }
         }

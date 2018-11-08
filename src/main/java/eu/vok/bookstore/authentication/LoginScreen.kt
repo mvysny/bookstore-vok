@@ -2,6 +2,7 @@ package eu.vok.bookstore.authentication
 
 import com.github.vok.framework.flow.Session
 import com.github.vok.karibudsl.flow.*
+import com.github.vok.security.AllowAll
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.notification.Notification
@@ -19,6 +20,7 @@ import eu.vok.bookstore.crud.addKeyListener
 @Route("Login")
 @PageTitle("Login")
 @StyleSheet("css/shared-styles.css")
+@AllowAll
 class LoginScreen : FlexLayout() {
 
     private lateinit var username: TextField
