@@ -38,3 +38,11 @@ Other basic workflow steps:
   - run `./gradlew appRun`
   - open http://localhost:8080/
 
+## Links
+
+The project uses the following libraries:
+
+* Based on the [Vaadin-on-Kotlin](http://vaadinonkotlin.eu) framework.
+* [Karibu-Testing](https://github.com/mvysny/karibu-testing) for testing
+* [vok-security](https://github.com/mvysny/vaadin-on-kotlin/tree/master/vok-security) for enforcing user security
+* [Vaadin](https://vaadin.com/docs/v10) for the UI
