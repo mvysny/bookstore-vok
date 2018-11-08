@@ -3,12 +3,9 @@ package eu.vok.bookstore.authentication
 import com.github.vok.karibudsl.flow.*
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet
-import com.vaadin.flow.component.html.H1
-import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.FlexLayout
-import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.router.PageTitle
