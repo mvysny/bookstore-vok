@@ -7,6 +7,7 @@ import com.github.vokorm.deleteAll
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
+import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
 import eu.vok.bookstore.crud.SampleCrudView
@@ -17,7 +18,7 @@ import eu.vok.bookstore.crud.SampleCrudView
  */
 fun DynaNodeGroup.usingDB() {
     beforeGroup { Bootstrap().contextInitialized(null) }
-    afterGroup { Bootstrap().contextDestroyed(null) }
+    afterGroup { User.deleteAll(); Bootstrap().contextDestroyed(null) }
 
     // it's a good practice to clear up the db before every test, to start every test with a predefined state.
     fun cleanupDb() {

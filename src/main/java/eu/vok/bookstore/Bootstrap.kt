@@ -59,8 +59,8 @@ class Bootstrap: ServletContextListener {
                 return roles.split(",").toSet()
             }
         }
-        User(username = "admin", roles = "admin,user").apply { setPassword("admin"); save() }
-        User(username = "user", roles = "user").apply { setPassword("user"); save() }
+        User(username = "admin", roles = "admin,user").apply { setPassword("admin") } .save()
+        User(username = "user", roles = "user").apply { setPassword("user") } .save()
 
         // pre-populates the database with a demo data
         log.info("Populating database with testing data")
