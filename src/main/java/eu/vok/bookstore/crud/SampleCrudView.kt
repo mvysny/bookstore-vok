@@ -91,7 +91,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
             }
             grid = productGrid {
                 asSingleSelect().addValueChangeListener { event ->
-                    if (AccessControlFactory.getInstance().createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
+                    if (AccessControlFactory.instance.createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
                         edit(event.value)
                     }
                 }
@@ -101,7 +101,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
         form = productForm(formListener)
 
         edit(null)
-        if (!AccessControlFactory.getInstance().createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
+        if (!AccessControlFactory.instance.createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
             newProduct!!.isEnabled = false
         }
     }

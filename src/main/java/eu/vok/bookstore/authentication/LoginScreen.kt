@@ -22,7 +22,7 @@ class LoginScreen : FlexLayout() {
 
     private lateinit var username: TextField
     private lateinit var password: PasswordField
-    private val accessControl: AccessControl = AccessControlFactory.getInstance().createAccessControl()
+    private val accessControl: AccessControl = AccessControlFactory.instance.createAccessControl()
 
     init {
         setSizeFull(); className = "login-screen"
@@ -30,7 +30,7 @@ class LoginScreen : FlexLayout() {
         verticalLayout {  // login info
             className = "login-information"
             h1("Login Information")
-            span("""Log in as "admin" to have full access. Log in with any other username to have read-only access. For all users, any password is fine.""")
+            span("""Log in as "admin"/"admin" to have full access. Log in with "user"/"user" to have read-only access.""")
         }
 
         flexLayout {

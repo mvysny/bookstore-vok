@@ -1,8 +1,13 @@
 package eu.vok.bookstore
 
 import com.github.vok.framework.VaadinOnKotlin
+import com.github.vok.framework.flow.Session
 import com.github.vok.framework.sql2o.dataSource
 import com.github.vok.framework.sql2o.dataSourceConfig
+import com.github.vok.security.LoggedInUserResolver
+import com.github.vok.security.loggedInUserResolver
+import eu.vok.bookstore.authentication.User
+import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.mock.MockDataGenerator
 import org.flywaydb.core.Flyway
 import org.h2.Driver
@@ -45,6 +50,17 @@ class Bootstrap: ServletContextListener {
             .dataSource(VaadinOnKotlin.dataSource)
             .load()
         flyway.migrate()
+
+        // setup security
+        VaadinOnKotlin.loggedInUserResolver = object : LoggedInUserResolver {
+            override fun isLoggedIn(): Boolean = Session.loginManager.isLoggedIn
+            override fun getCurrentUserRoles(): Set<String> {
+                val roles = Session.loginManager.user?.roles ?: ""
+                return roles.split(",").toSet()
+            }
+        }
+        User(username = "admin", roles = "admin,user").apply { setPassword("admin"); save() }
+        User(username = "user", roles = "user").apply { setPassword("user"); save() }
 
         // pre-populates the database with a demo data
         log.info("Populating database with testing data")

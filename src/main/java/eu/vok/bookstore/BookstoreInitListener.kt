@@ -13,7 +13,7 @@ import eu.vok.bookstore.authentication.LoginScreen
  */
 class BookstoreInitListener : VaadinServiceInitListener {
     override fun serviceInit(initEvent: ServiceInitEvent) {
-        val accessControl = AccessControlFactory.getInstance()
+        val accessControl = AccessControlFactory.instance
                 .createAccessControl()
 
         initEvent.source.addUIInitListener { uiInitEvent ->
