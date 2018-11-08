@@ -76,9 +76,9 @@ class LoginManager: Serializable {
         UI.getCurrent().page.reload()
     }
 
-    fun isUserInRole(role: String): Boolean {
-        return VaadinOnKotlin.loggedInUserResolver!!.getCurrentUserRoles().contains(role)
-    }
+    fun isUserInRole(role: String): Boolean = VaadinOnKotlin.loggedInUserResolver!!.getCurrentUserRoles().contains(role)
+
+    fun isAdmin(): Boolean = isUserInRole("admin")
 }
 
 /**

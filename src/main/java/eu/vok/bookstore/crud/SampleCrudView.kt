@@ -2,6 +2,7 @@ package eu.vok.bookstore.crud
 
 import com.github.vok.framework.flow.Session
 import com.github.vok.karibudsl.flow.*
+import com.github.vok.security.AllowAllUsers
 import com.github.vokorm.findById
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
@@ -25,15 +26,13 @@ import eu.vok.bookstore.backend.data.Product
  */
 @Route(value = "Inventory", layout = MainLayout::class)
 @RouteAlias(value = "", layout = MainLayout::class)
+@AllowAllUsers
 class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
     private lateinit var grid: ProductGrid
     private val form: ProductForm
     private lateinit var filter: TextField
 
     private var newProduct: Button? = null
-
-    val selectedRow: Product
-        get() = grid.selectedRow
 
     private val formListener = object : FormListener<Product> {
         override fun cancel() {
@@ -91,7 +90,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
             }
             grid = productGrid {
                 asSingleSelect().addValueChangeListener { event ->
-                    if (Session.loginManager.isUserInRole("admin")) {
+                    if (Session.loginManager.isAdmin()) {
                         edit(event.value)
                     }
                 }
@@ -101,7 +100,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
         form = productForm(formListener)
 
         edit(null)
-        if (!Session.loginManager.isUserInRole("admin")) {
+        if (!Session.loginManager.isAdmin()) {
             newProduct!!.isEnabled = false
         }
     }
