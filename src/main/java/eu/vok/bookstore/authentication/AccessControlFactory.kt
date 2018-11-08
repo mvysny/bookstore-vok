@@ -7,15 +7,6 @@ import com.github.vok.security.loggedInUserResolver
 class AccessControlFactory private constructor() {
     fun createAccessControl(): AccessControl {
         return object : AccessControl {
-            override fun signIn(username: String, password: String): Boolean {
-                val user = User.findByUsername(username) ?: return false
-                if (!user.passwordMatches(password)) {
-                    return false
-                }
-                Session.loginManager.login(user)
-                return true
-            }
-
             override fun isUserSignedIn(): Boolean = Session.loginManager.isLoggedIn
 
             override fun isUserInRole(role: String): Boolean =

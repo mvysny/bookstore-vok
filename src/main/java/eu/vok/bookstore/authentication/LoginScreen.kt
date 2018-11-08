@@ -1,5 +1,6 @@
 package eu.vok.bookstore.authentication
 
+import com.github.vok.framework.flow.Session
 import com.github.vok.karibudsl.flow.*
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet
@@ -72,7 +73,7 @@ class LoginScreen : FlexLayout() {
     }
 
     private fun login() {
-        if (accessControl.signIn(username.value, password.value)) {
+        if (Session.loginManager.signIn(username.value, password.value)) {
             ui.get().navigate("")
         } else {
             showNotification(Notification("Login failed. " + "Please check your username and password and try again."))

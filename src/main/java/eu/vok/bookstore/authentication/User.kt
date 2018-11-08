@@ -43,10 +43,19 @@ class LoginManager: Serializable {
      */
     val isLoggedIn: Boolean get() = user != null
 
+    fun signIn(username: String, password: String): Boolean {
+        val user = User.findByUsername(username) ?: return false
+        if (!user.passwordMatches(password)) {
+            return false
+        }
+        login(user)
+        return true
+    }
+
     /**
      * Logs in an [user]. Fails if the user is already logged in.
      */
-    fun login(user: User) {
+    private fun login(user: User) {
         check(this.user == null) { "An user is already logged in" }
         this.user = user
         // this will cause the UI to be re-created. Since the user is now logged in and present in the session,
