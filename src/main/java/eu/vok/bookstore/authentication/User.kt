@@ -47,9 +47,7 @@ class LoginManager: Serializable {
 
     fun signIn(username: String, password: String): Boolean {
         val user = User.findByUsername(username) ?: return false
-        if (!user.passwordMatches(password)) {
-            return false
-        }
+        if (!user.passwordMatches(password)) return false
         login(user)
         return true
     }
@@ -77,7 +75,7 @@ class LoginManager: Serializable {
     }
 
     fun getCurrentUserRoles(): Set<String> {
-        val roles = user?.roles ?: ""
+        val roles = user?.roles ?: return setOf()
         return roles.split(",").toSet()
     }
 
