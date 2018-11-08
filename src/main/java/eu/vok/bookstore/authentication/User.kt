@@ -1,6 +1,8 @@
 package eu.vok.bookstore.authentication
 
+import com.github.vok.framework.VaadinOnKotlin
 import com.github.vok.framework.flow.Session
+import com.github.vok.security.loggedInUserResolver
 import com.github.vok.security.simple.HasPassword
 import com.github.vokorm.Dao
 import com.github.vokorm.Entity
@@ -72,6 +74,10 @@ class LoginManager: Serializable {
         // the UI will show the LoginView.
         UI.getCurrent().navigate("")
         UI.getCurrent().page.reload()
+    }
+
+    fun isUserInRole(role: String): Boolean {
+        return VaadinOnKotlin.loggedInUserResolver!!.getCurrentUserRoles().contains(role)
     }
 }
 

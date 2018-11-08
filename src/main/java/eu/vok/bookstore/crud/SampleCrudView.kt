@@ -1,5 +1,6 @@
 package eu.vok.bookstore.crud
 
+import com.github.vok.framework.flow.Session
 import com.github.vok.karibudsl.flow.*
 import com.github.vokorm.findById
 import com.vaadin.flow.component.UI
@@ -16,8 +17,7 @@ import com.vaadin.flow.router.OptionalParameter
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.router.RouteAlias
 import eu.vok.bookstore.MainLayout
-import eu.vok.bookstore.authentication.AccessControl
-import eu.vok.bookstore.authentication.AccessControlFactory
+import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.data.Product
 
 /**
@@ -91,7 +91,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
             }
             grid = productGrid {
                 asSingleSelect().addValueChangeListener { event ->
-                    if (AccessControlFactory.instance.createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
+                    if (Session.loginManager.isUserInRole("admin")) {
                         edit(event.value)
                     }
                 }
@@ -101,7 +101,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
         form = productForm(formListener)
 
         edit(null)
-        if (!AccessControlFactory.instance.createAccessControl().isUserInRole(AccessControl.ADMIN_ROLE_NAME)) {
+        if (!Session.loginManager.isUserInRole("admin")) {
             newProduct!!.isEnabled = false
         }
     }

@@ -23,7 +23,6 @@ class LoginScreen : FlexLayout() {
 
     private lateinit var username: TextField
     private lateinit var password: PasswordField
-    private val accessControl: AccessControl = AccessControlFactory.instance.createAccessControl()
 
     init {
         setSizeFull(); className = "login-screen"

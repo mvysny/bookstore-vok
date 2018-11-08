@@ -1,9 +1,10 @@
 package eu.vok.bookstore
 
+import com.github.vok.framework.flow.Session
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
-import eu.vok.bookstore.authentication.AccessControlFactory
 import eu.vok.bookstore.authentication.LoginScreen
+import eu.vok.bookstore.authentication.loginManager
 
 /**
  * This class is used to listen to BeforeEnter event of all UIs in order to
@@ -13,12 +14,9 @@ import eu.vok.bookstore.authentication.LoginScreen
  */
 class BookstoreInitListener : VaadinServiceInitListener {
     override fun serviceInit(initEvent: ServiceInitEvent) {
-        val accessControl = AccessControlFactory.instance
-                .createAccessControl()
-
         initEvent.source.addUIInitListener { uiInitEvent ->
             uiInitEvent.ui.addBeforeEnterListener { enterEvent ->
-                if (!accessControl.isUserSignedIn && enterEvent.navigationTarget != LoginScreen::class.java)
+                if (!Session.loginManager.isLoggedIn && enterEvent.navigationTarget != LoginScreen::class.java)
                     enterEvent.rerouteTo(LoginScreen::class.java)
             }
         }
