@@ -1,7 +1,6 @@
 package eu.vok.bookstore.about
 
-import com.github.karibu.testing.v10._get
-import com.github.karibu.testing.v10.textContains
+import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaTest
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.html.Span

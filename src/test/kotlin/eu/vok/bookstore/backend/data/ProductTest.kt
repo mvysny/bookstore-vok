@@ -3,7 +3,6 @@ package eu.vok.bookstore.backend.data
 import com.github.mvysny.dynatest.DynaTest
 import com.github.mvysny.dynatest.expectList
 import com.github.vokorm.count
-import com.github.vokorm.db
 import eu.vok.bookstore.usingDB
 import kotlin.test.expect
 

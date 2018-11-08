@@ -1,6 +1,6 @@
 package eu.vok.bookstore
 
-import com.github.karibu.testing.v10.*
+import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaNodeGroup
 import com.github.vokorm.db
 import com.github.vokorm.deleteAll
