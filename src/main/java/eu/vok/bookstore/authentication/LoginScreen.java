@@ -101,17 +101,12 @@ public class LoginScreen extends FlexLayout {
     }
 
     private void login() {
-        login.setEnabled(false);
-        try {
-            if (accessControl.signIn(username.getValue(), password.getValue())) {
-                getUI().get().navigate("");
-            } else {
-                showNotification(new Notification("Login failed. " +
-                        "Please check your username and password and try again."));
-                username.focus();
-            }
-        } finally {
-            login.setEnabled(true);
+        if (accessControl.signIn(username.getValue(), password.getValue())) {
+            getUI().get().navigate("");
+        } else {
+            showNotification(new Notification("Login failed. " +
+                    "Please check your username and password and try again."));
+            username.focus();
         }
     }
 

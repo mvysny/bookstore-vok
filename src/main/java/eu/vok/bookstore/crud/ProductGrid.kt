@@ -51,7 +51,7 @@ class ProductGrid : Grid<Product>() {
         // Three css classes with the same names of three availability values,
         // Available, Coming and Discontinued, are defined in shared-styles.css and are
         // used here in availabilityTemplate.
-        val availabilityTemplate = "<iron-icon icon=\"vaadin:circle\" class-name=\"[[item.availability]]\"></iron-icon> [[item.availability]]"
+        val availabilityTemplate = """<iron-icon icon="vaadin:circle" class-name="[[item.availability]]"></iron-icon> [[item.availability]]"""
         addColumn(TemplateRenderer.of<Product>(availabilityTemplate)
                 .withProperty("availability") { (_, _, _, _, availability) -> availability.displayableName }).apply {
             setHeader("Availability")
@@ -79,13 +79,10 @@ class ProductGrid : Grid<Product>() {
         dataProvider = Product.dataProvider
     }
 
-    fun refresh(product: Product) {
-        dataCommunicator.refresh(product)
-    }
-
     private fun formatCategories(product: Product): String = product.category.map { it.name!! }.sorted().joinToString()
 
     fun setFilter(filter: String) {
+        @Suppress("UNCHECKED_CAST")
         val dp = dataProvider as VokDataProvider<Product>
         if (filter.isBlank()) {
             dp.setFilter(null)
