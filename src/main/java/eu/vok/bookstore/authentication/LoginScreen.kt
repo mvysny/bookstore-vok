@@ -1,9 +1,7 @@
 package eu.vok.bookstore.authentication
 
 import com.github.vok.karibudsl.flow.*
-import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.Key
-import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.html.H1
 import com.vaadin.flow.component.html.Span
@@ -32,8 +30,11 @@ class LoginScreen : FlexLayout() {
     init {
         setSizeFull(); className = "login-screen"
 
-        val loginInformation = buildLoginInformation()
-        add(loginInformation)
+        verticalLayout {  // login info
+            className = "login-information"
+            h1("Login Information")
+            span("""Log in as "admin" to have full access. Log in with any other username to have read-only access. For all users, any password is fine.""")
+        }
 
         flexLayout {
             setSizeFull()
@@ -73,25 +74,12 @@ class LoginScreen : FlexLayout() {
         }
     }
 
-    private fun buildLoginInformation(): Component {
-        val loginInformation = VerticalLayout()
-        loginInformation.className = "login-information"
-
-        val loginInfoHeader = H1("Login Information")
-        val loginInfoText = Span(
-                """Log in as "admin" to have full access. Log in with any other username to have read-only access. For all users, any password is fine.""")
-        loginInformation.add(loginInfoHeader)
-        loginInformation.add(loginInfoText)
-
-        return loginInformation
-    }
-
     private fun login() {
-        if (accessControl.signIn(username!!.value, password!!.value)) {
+        if (accessControl.signIn(username.value, password.value)) {
             ui.get().navigate("")
         } else {
             showNotification(Notification("Login failed. " + "Please check your username and password and try again."))
-            username!!.focus()
+            username.focus()
         }
     }
 
