@@ -1,7 +1,7 @@
 package eu.vok.bookstore.crud
 
 import com.github.vok.framework.flow.Session
-import com.github.vok.karibudsl.flow.*
+import com.github.mvysny.karibudsl.v10.*
 import com.github.vok.security.AllowAllUsers
 import com.github.vokorm.findById
 import com.vaadin.flow.component.UI

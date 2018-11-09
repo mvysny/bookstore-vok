@@ -1,6 +1,6 @@
 package eu.vok.bookstore.crud
 
-import com.github.vok.karibudsl.flow.*
+import com.github.mvysny.karibudsl.v10.*
 import com.github.vokorm.findAll
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents

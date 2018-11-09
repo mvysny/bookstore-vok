@@ -1,8 +1,8 @@
 package eu.vok.bookstore.about
 
-import com.github.vok.karibudsl.flow.content
-import com.github.vok.karibudsl.flow.icon
-import com.github.vok.karibudsl.flow.span
+import com.github.mvysny.karibudsl.v10.content
+import com.github.mvysny.karibudsl.v10.icon
+import com.github.mvysny.karibudsl.v10.span
 import com.github.vok.security.AllowAllUsers
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout

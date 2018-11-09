@@ -1,7 +1,7 @@
 package eu.vok.bookstore.authentication
 
 import com.github.vok.framework.flow.Session
-import com.github.vok.karibudsl.flow.*
+import com.github.mvysny.karibudsl.v10.*
 import com.github.vok.security.AllowAll
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet

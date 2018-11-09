@@ -1,7 +1,7 @@
 package eu.vok.bookstore
 
-import com.github.vok.karibudsl.flow.h1
-import com.github.vok.karibudsl.flow.span
+import com.github.mvysny.karibudsl.v10.h1
+import com.github.mvysny.karibudsl.v10.span
 import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.*
