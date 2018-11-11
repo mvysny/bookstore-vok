@@ -1,13 +1,11 @@
 package eu.vok.bookstore.authentication
 
-import com.github.vok.framework.VaadinOnKotlin
-import com.github.vok.framework.flow.Session
-import com.github.vok.security.loggedInUserResolver
-import com.github.vok.security.simple.HasPassword
 import com.github.vokorm.Dao
 import com.github.vokorm.Entity
 import com.github.vokorm.findSpecificBy
 import com.vaadin.flow.component.UI
+import eu.vaadinonkotlin.security.simple.HasPassword
+import eu.vaadinonkotlin.vaadin10.Session
 import java.io.Serializable
 
 /**

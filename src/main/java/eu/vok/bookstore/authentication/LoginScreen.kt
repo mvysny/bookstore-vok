@@ -1,8 +1,6 @@
 package eu.vok.bookstore.authentication
 
-import com.github.vok.framework.flow.Session
 import com.github.mvysny.karibudsl.v10.*
-import com.github.vok.security.AllowAll
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.notification.Notification
@@ -12,6 +10,8 @@ import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
+import eu.vaadinonkotlin.security.AllowAll
+import eu.vaadinonkotlin.vaadin10.Session
 import eu.vok.bookstore.crud.addKeyListener
 
 /**

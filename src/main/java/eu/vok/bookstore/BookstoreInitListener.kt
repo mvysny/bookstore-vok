@@ -1,9 +1,9 @@
 package eu.vok.bookstore
 
-import com.github.vok.framework.flow.Session
-import com.github.vok.framework.flow.VokSecurity
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
+import eu.vaadinonkotlin.vaadin10.Session
+import eu.vaadinonkotlin.vaadin10.VokSecurity
 import eu.vok.bookstore.authentication.LoginScreen
 import eu.vok.bookstore.authentication.loginManager
 

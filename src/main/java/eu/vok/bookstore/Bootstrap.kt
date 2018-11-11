@@ -1,11 +1,11 @@
 package eu.vok.bookstore
 
-import com.github.vok.framework.VaadinOnKotlin
-import com.github.vok.framework.flow.Session
-import com.github.vok.framework.sql2o.dataSource
-import com.github.vok.framework.sql2o.dataSourceConfig
-import com.github.vok.security.LoggedInUserResolver
-import com.github.vok.security.loggedInUserResolver
+import eu.vaadinonkotlin.VaadinOnKotlin
+import eu.vaadinonkotlin.security.LoggedInUserResolver
+import eu.vaadinonkotlin.security.loggedInUserResolver
+import eu.vaadinonkotlin.sql2o.dataSource
+import eu.vaadinonkotlin.sql2o.dataSourceConfig
+import eu.vaadinonkotlin.vaadin10.Session
 import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.mock.MockDataGenerator
@@ -67,7 +67,7 @@ class Bootstrap: ServletContextListener {
     }
 
     override fun contextDestroyed(sce: ServletContextEvent?) {
-        log.info("Shutting down");
+        log.info("Shutting down")
         log.info("Destroying VaadinOnKotlin")
         VaadinOnKotlin.destroy()
         log.info("Shutdown complete")

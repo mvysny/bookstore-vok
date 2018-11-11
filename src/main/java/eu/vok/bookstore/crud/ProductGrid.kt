@@ -1,16 +1,15 @@
 package eu.vok.bookstore.crud
 
-import com.github.vok.framework.sql2o.vaadin.VokDataProvider
-import com.github.vok.framework.sql2o.vaadin.dataProvider
-import com.github.vok.framework.sql2o.vaadin.setFilter
 import com.github.mvysny.karibudsl.v10.VaadinDsl
 import com.github.mvysny.karibudsl.v10.addColumnFor
 import com.github.mvysny.karibudsl.v10.init
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
+import eu.vaadinonkotlin.vaadin10.sql2o.VokDataProvider
+import eu.vaadinonkotlin.vaadin10.sql2o.dataProvider
+import eu.vaadinonkotlin.vaadin10.sql2o.setFilter
 import eu.vok.bookstore.backend.data.Product
-import org.vaadin.pekka.CheckboxGroup
 import java.text.DecimalFormat
 
 /**
