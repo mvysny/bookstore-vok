@@ -181,6 +181,7 @@ interface FormListener<B> {
 @VaadinDsl
 fun <T : Any?> (@VaadinDsl HasComponents).checkBoxGroup(block: (@VaadinDsl CheckboxGroup<T>).() -> Unit = {}) = init(CheckboxGroup(), block)
 
+//@todo mavi remove when Karibu-DSL 0.5.2 is released
 fun Component.addKeyListener(key: Key, listener: () -> Unit) {
     element.addEventListener("keydown") { listener() }.filter = "event.key == '${key.keys[0]}'"
 }
