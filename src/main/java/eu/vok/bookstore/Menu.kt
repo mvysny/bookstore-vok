@@ -13,50 +13,52 @@ import com.vaadin.flow.server.VaadinServletService
 import com.vaadin.flow.server.VaadinSession
 import kotlin.reflect.KClass
 
-class Menu : FlexLayout() {
+class Menu : KComposite() {
     private lateinit var tabs: Tabs
 
-    init {
-        className = "menu-bar"
+    private val root = ui {
+        flexLayout {
+            className = "menu-bar"
 
-        // Button for toggling the menu visibility on small screens
-        button("Menu") {
-            className = "menu-button"
-            element.themeList.add("small")
-            icon = Icon(VaadinIcon.MENU)
+            // Button for toggling the menu visibility on small screens
+            button("Menu") {
+                className = "menu-button"
+                element.themeList.add("small")
+                icon = Icon(VaadinIcon.MENU)
 
-            onLeftClick {
-                tabs.classNames.flip("show-tabs")
+                onLeftClick {
+                    tabs.classNames.flip("show-tabs")
+                }
             }
-        }
 
-        // header of the menu
-        horizontalLayout {
-            defaultVerticalComponentAlignment = FlexComponent.Alignment.CENTER
-            className = "menu-header"
+            // header of the menu
+            horizontalLayout {
+                defaultVerticalComponentAlignment = FlexComponent.Alignment.CENTER
+                className = "menu-header"
 
-            // Note! Image resource url is resolved here as it is dependent on the
-            // execution mode (development or production) and browser ES level support
-            val resolvedImage = VaadinServletService.getCurrent()
-                    .resolveResource("frontend://img/table-logo.png",
-                            VaadinSession.getCurrent().browser)
-            image(resolvedImage, "")
+                // Note! Image resource url is resolved here as it is dependent on the
+                // execution mode (development or production) and browser ES level support
+                val resolvedImage = VaadinServletService.getCurrent()
+                        .resolveResource("frontend://img/table-logo.png",
+                                VaadinSession.getCurrent().browser)
+                image(resolvedImage, "")
 
-            label("My CRUD")
-        }
+                label("My CRUD")
+            }
 
-        // container for the navigation buttons, which are added by addView()
-        tabs = tabs {
-            orientation = Tabs.Orientation.VERTICAL
-            flexGrow = 1.0
-        }
+            // container for the navigation buttons, which are added by addView()
+            tabs = tabs {
+                orientation = Tabs.Orientation.VERTICAL
+                flexGrow = 1.0
+            }
 
-        // logout menu item
-        button("Logout", VaadinIcon.SIGN_OUT.create()) {
-            themes.add("tertiary-inline")
-            onLeftClick {
-                VaadinSession.getCurrent().session.invalidate()
-                UI.getCurrent().page.reload()
+            // logout menu item
+            button("Logout", VaadinIcon.SIGN_OUT.create()) {
+                themes.add("tertiary-inline")
+                onLeftClick {
+                    VaadinSession.getCurrent().session.invalidate()
+                    UI.getCurrent().page.reload()
+                }
             }
         }
     }
