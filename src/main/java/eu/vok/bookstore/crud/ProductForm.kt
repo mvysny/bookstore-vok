@@ -2,13 +2,10 @@ package eu.vok.bookstore.crud
 
 import com.github.mvysny.karibudsl.v10.*
 import com.github.vokorm.findAll
-import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.button.Button
-import com.vaadin.flow.component.html.Div
 import com.vaadin.flow.component.html.Span
-import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.data.binder.BeanValidationBinder
 import com.vaadin.flow.data.converter.StringToBigDecimalConverter
 import com.vaadin.flow.data.converter.StringToIntegerConverter
@@ -24,9 +21,7 @@ import java.util.*
 /**
  * A form for editing a single product.
  */
-class ProductForm(private val listener: FormListener<Product>) : Div() {
-
-    private val content: VerticalLayout
+class ProductForm(private val listener: FormListener<Product>) : KComposite() {
 
     private lateinit var save: Button
     private lateinit var discard: Button
@@ -63,95 +58,97 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
         }
     }
 
-    init {
-        className = "product-form"
+    private val root = ui {
+        div {
+            className = "product-form"
 
-        content = verticalLayout {
-            width = "400px"
+            verticalLayout {
+                width = "400px"
 
-            textField("Product name") {
-                width = "100%"
-                isRequired = true
-                valueChangeMode = ValueChangeMode.EAGER
-                bind(binder).bind(Product::productName)
-            }
-
-            horizontalLayout {
-                width = "100%"
-
-                textField("Price") {
-                    suffixComponent = Span("€")
-                    element.themeList.add("align-right")
+                textField("Product name") {
+                    width = "100%"
+                    isRequired = true
                     valueChangeMode = ValueChangeMode.EAGER
-                    bind(binder).withConverter(PriceConverter()).bind(Product::price)
-                    isExpand = true; width = "20%"; flexBasis = "1px"
+                    bind(binder).bind(Product::productName)
                 }
 
-                textField("In stock") {
-                    element.themeList.add("align-right")
-                    valueChangeMode = ValueChangeMode.EAGER
-                    bind(binder).withConverter(StockCountConverter()).bind(Product::stockCount)
-                    isExpand = true; width = "20%"; flexBasis = "1px"
-                }
-            }
+                horizontalLayout {
+                    width = "100%"
 
-            comboBox<Availability>("Availability") {
-                width = "100%"
-                isRequired = true
-                setItems(*Availability.values())
-                isAllowCustomValue = false
-                bind(binder).bind(Product::availability)
-            }
+                    textField("Price") {
+                        suffixComponent = Span("€")
+                        element.themeList.add("align-right")
+                        valueChangeMode = ValueChangeMode.EAGER
+                        bind(binder).withConverter(PriceConverter()).bind(Product::price)
+                        isExpand = true; width = "20%"; flexBasis = "1px"
+                    }
 
-            val categoryLabel = label("Categories") {
-                className = "vaadin-label"
-            }
-
-            checkBoxGroup<Category> {
-                width = "100%"
-                setId("category")
-                setItems(Category.findAll())
-                categoryLabel.setFor(this)
-                bind(binder).bind(Product::category)
-            }
-
-            save = button("Save") {
-                width = "100%"; setPrimary()
-                onLeftClick {
-                    if (binder.writeBeanIfValid(currentProduct)) {
-                        listener.save(currentProduct)
+                    textField("In stock") {
+                        element.themeList.add("align-right")
+                        valueChangeMode = ValueChangeMode.EAGER
+                        bind(binder).withConverter(StockCountConverter()).bind(Product::stockCount)
+                        isExpand = true; width = "20%"; flexBasis = "1px"
                     }
                 }
-            }
 
-            discard = button("Discard changes") {
-                width = "100%"
-                onLeftClick { listener.discardChanges(currentProduct) }
-            }
+                comboBox<Availability>("Availability") {
+                    width = "100%"
+                    isRequired = true
+                    setItems(*Availability.values())
+                    isAllowCustomValue = false
+                    bind(binder).bind(Product::availability)
+                }
 
-            delete = button("Delete") {
-                width = "100%"; setPrimary()
-                element.themeList.add("error")
-                onLeftClick {
-                    listener.delete(currentProduct)
+                val categoryLabel = label("Categories") {
+                    className = "vaadin-label"
+                }
+
+                checkBoxGroup<Category> {
+                    width = "100%"
+                    setId("category")
+                    setItems(Category.findAll())
+                    categoryLabel.setFor(this)
+                    bind(binder).bind(Product::category)
+                }
+
+                save = button("Save") {
+                    width = "100%"; setPrimary()
+                    onLeftClick {
+                        if (binder.writeBeanIfValid(currentProduct)) {
+                            listener.save(currentProduct)
+                        }
+                    }
+                }
+
+                discard = button("Discard changes") {
+                    width = "100%"
+                    onLeftClick { listener.discardChanges(currentProduct) }
+                }
+
+                delete = button("Delete") {
+                    width = "100%"; setPrimary()
+                    element.themeList.add("error")
+                    onLeftClick {
+                        listener.delete(currentProduct)
+                    }
+                }
+
+                button("Cancel") {
+                    width = "100%"
+                    addClickListener { listener.cancel() }
                 }
             }
 
-            button("Cancel") {
-                width = "100%"
-                addClickListener { listener.cancel() }
+            // enable/disable save button while editing
+            binder.addStatusChangeListener { event ->
+                val isValid = !event.hasValidationErrors()
+                val hasChanges = binder.hasChanges()
+                save.isEnabled = hasChanges && isValid
+                discard.isEnabled = hasChanges
             }
-        }
 
-        // enable/disable save button while editing
-        binder.addStatusChangeListener { event ->
-            val isValid = !event.hasValidationErrors()
-            val hasChanges = binder.hasChanges()
-            save.isEnabled = hasChanges && isValid
-            discard.isEnabled = hasChanges
+            addKeyListener(Key.ESCAPE) { listener.cancel() }
         }
-
-        addKeyListener(Key.ESCAPE) { listener.cancel() }
     }
 
     fun editProduct(product: Product?) {
