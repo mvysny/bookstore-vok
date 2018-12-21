@@ -16,7 +16,6 @@ import com.vaadin.flow.data.value.ValueChangeMode
 import eu.vok.bookstore.backend.data.Availability
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
-import org.vaadin.pekka.CheckboxGroup
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -68,7 +67,7 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
         className = "product-form"
 
         content = verticalLayout {
-            setSizeUndefined()
+            width = "400px"
 
             textField("Product name") {
                 width = "100%"
@@ -85,14 +84,14 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
                     element.themeList.add("align-right")
                     valueChangeMode = ValueChangeMode.EAGER
                     bind(binder).withConverter(PriceConverter()).bind(Product::price)
-                    isExpand = true
+                    isExpand = true; width = "20%"; flexBasis = "1px"
                 }
 
                 textField("In stock") {
                     element.themeList.add("align-right")
                     valueChangeMode = ValueChangeMode.EAGER
-                    isExpand = true
                     bind(binder).withConverter(StockCountConverter()).bind(Product::stockCount)
+                    isExpand = true; width = "20%"; flexBasis = "1px"
                 }
             }
 
@@ -109,10 +108,9 @@ class ProductForm(private val listener: FormListener<Product>) : Div() {
             }
 
             checkBoxGroup<Category> {
+                width = "100%"
                 setId("category")
                 setItems(Category.findAll())
-                content.style.set("flex-direction", "column")
-                        .set("margin", "0")
                 categoryLabel.setFor(this)
                 bind(binder).bind(Product::category)
             }
@@ -176,14 +174,6 @@ interface FormListener<B> {
     fun cancel()
 
     fun delete(bean: B)
-}
-
-@VaadinDsl
-fun <T : Any?> (@VaadinDsl HasComponents).checkBoxGroup(block: (@VaadinDsl CheckboxGroup<T>).() -> Unit = {}) = init(CheckboxGroup(), block)
-
-//@todo mavi remove when Karibu-DSL 0.5.2 is released
-fun Component.addKeyListener(key: Key, listener: () -> Unit) {
-    element.addEventListener("keydown") { listener() }.filter = "event.key == '${key.keys[0]}'"
 }
 
 @VaadinDsl

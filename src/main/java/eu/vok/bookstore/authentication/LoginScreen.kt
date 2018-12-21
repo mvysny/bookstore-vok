@@ -12,7 +12,6 @@ import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import eu.vaadinonkotlin.security.AllowAll
 import eu.vaadinonkotlin.vaadin10.Session
-import eu.vok.bookstore.crud.addKeyListener
 
 /**
  * UI content when the user is not logged in yet.
