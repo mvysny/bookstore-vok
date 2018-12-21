@@ -5,7 +5,6 @@ import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.FlexComponent
-import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.router.PageTitle
@@ -20,54 +19,58 @@ import eu.vaadinonkotlin.vaadin10.Session
 @PageTitle("Login")
 @StyleSheet("css/shared-styles.css")
 @AllowAll
-class LoginScreen : FlexLayout() {
+class LoginScreen : KComposite() {
 
     private lateinit var username: TextField
     private lateinit var password: PasswordField
 
-    init {
-        setSizeFull(); className = "login-screen"
-
-        verticalLayout {  // login info
-            className = "login-information"
-            h1("Login Information")
-            span("""Log in as "admin"/"admin" to have full access. Log in with "user"/"user" to have read-only access.""")
-        }
-
+    private val root = ui {
         flexLayout {
-            setSizeFull()
-            justifyContentMode = FlexComponent.JustifyContentMode.CENTER
-            alignItems = FlexComponent.Alignment.CENTER
+            setSizeFull(); className = "login-screen"
 
-            formLayout {
-                width = "310px"
-                formItem("Username") {
-                    username = textField {
-                        width = "15em"
-                        value = "admin"
-                        setId("username")
-                        focus()
+            verticalLayout {
+                // login info
+                className = "login-information"
+                h1("Login Information")
+                span("""Log in as "admin"/"admin" to have full access. Log in with "user"/"user" to have read-only access.""")
+            }
+
+            flexLayout {
+                setSizeFull()
+                justifyContentMode = FlexComponent.JustifyContentMode.CENTER
+                alignItems = FlexComponent.Alignment.CENTER
+
+                formLayout {
+                    width = "310px"
+                    formItem("Username") {
+                        username = textField {
+                            width = "15em"
+                            value = "admin"
+                            setId("username")
+                            focus()
+                        }
                     }
+                    html("<br/>")
+                    formItem("Password") {
+                        password = passwordField {
+                            width = "15em"
+                            setId("password")
+                        }
+                    }
+                    html("<br/>")
+                    horizontalLayout {
+                        // buttons
+                        button("Login") {
+                            onLeftClick { login() }
+                            themes.add("success primary")
+                        }
+                        button("Forgot password?") {
+                            onLeftClick { showNotification(Notification("Hint: try anything")) }
+                            themes.add("tertiary")
+                        }
+                    }
+                    addKeyListener(Key.ENTER) { login() }
                 }
-                html("<br/>")
-                formItem("Password") {
-                    password = passwordField {
-                        width = "15em"
-                        setId("password")
-                    }
-                }
-                html("<br/>")
-                horizontalLayout { // buttons
-                    button("Login") {
-                        onLeftClick { login() }
-                        themes.add("success primary")
-                    }
-                    button("Forgot password?") {
-                        onLeftClick { showNotification(Notification("Hint: try anything")) }
-                        themes.add("tertiary")
-                    }
-                }
-                addKeyListener(Key.ENTER) { login() }
             }
         }
     }
