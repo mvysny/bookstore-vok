@@ -55,7 +55,7 @@ dependencies {
     compile("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v10:1.0.4")
+    testCompile("com.github.mvysny.kaributesting:karibu-testing-v10:1.0.5")
     testCompile("com.github.mvysny.dynatest:dynatest-engine:0.13")
 
     // heroku app runner
