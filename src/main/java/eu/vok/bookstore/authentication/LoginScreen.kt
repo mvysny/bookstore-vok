@@ -2,6 +2,8 @@ package eu.vok.bookstore.authentication
 
 import com.github.mvysny.karibudsl.v10.*
 import com.vaadin.flow.component.Key
+import com.vaadin.flow.component.Key.*
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.FlexComponent
@@ -62,14 +64,14 @@ class LoginScreen : KComposite() {
                         // buttons
                         button("Login") {
                             onLeftClick { login() }
-                            themes.add("success primary")
+                            addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY)
                         }
                         button("Forgot password?") {
                             onLeftClick { showNotification(Notification("Hint: try anything")) }
-                            themes.add("tertiary")
+                            addThemeVariants(ButtonVariant.LUMO_TERTIARY)
                         }
                     }
-                    addKeyListener(Key.ENTER) { login() }
+                    addShortcut(ENTER.shortcut) { login() }
                 }
             }
         }
@@ -91,3 +93,5 @@ class LoginScreen : KComposite() {
         notification.open()
     }
 }
+
+val Key.shortcut: KeyShortcut get() = KeyShortcut(this)

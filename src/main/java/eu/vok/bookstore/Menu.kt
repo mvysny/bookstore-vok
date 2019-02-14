@@ -4,10 +4,10 @@ import com.github.mvysny.karibudsl.v10.*
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.UI
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.icon.Icon
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.orderedlayout.FlexComponent
-import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.component.tabs.Tabs
 import com.vaadin.flow.server.VaadinServletService
 import com.vaadin.flow.server.VaadinSession
@@ -54,7 +54,7 @@ class Menu : KComposite() {
 
             // logout menu item
             button("Logout", VaadinIcon.SIGN_OUT.create()) {
-                themes.add("tertiary-inline")
+                addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE)
                 onLeftClick {
                     VaadinSession.getCurrent().session.invalidate()
                     UI.getCurrent().page.reload()
