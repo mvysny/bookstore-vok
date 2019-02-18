@@ -67,7 +67,7 @@ class LoginScreen : KComposite() {
                             addThemeVariants(ButtonVariant.LUMO_SUCCESS, ButtonVariant.LUMO_PRIMARY)
                         }
                         button("Forgot password?") {
-                            onLeftClick { showNotification(Notification("Hint: try anything")) }
+                            onLeftClick { showNotification(Notification("Hint: try any password")) }
                             addThemeVariants(ButtonVariant.LUMO_TERTIARY)
                         }
                     }
@@ -81,7 +81,7 @@ class LoginScreen : KComposite() {
         if (Session.loginManager.signIn(username.value, password.value)) {
             ui.get().navigate("")
         } else {
-            showNotification(Notification("Login failed. " + "Please check your username and password and try again."))
+            showNotification(Notification("Login failed. Please check your username and password and try again."))
             username.focus()
         }
     }
