@@ -147,7 +147,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
                 discard.isEnabled = hasChanges
             }
 
-            addKeyListener(Key.ESCAPE) { listener.cancel() }
+            addShortcut(Key.ESCAPE.shortcut) { listener.cancel() }
         }
     }
 
