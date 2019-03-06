@@ -107,6 +107,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
                     width = "100%"
                     setId("category")
                     setItems(Category.findAll())
+                    setItemLabelGenerator { it.name }
                     categoryLabel.setFor(this)
                     bind(binder).bind(Product::category)
                 }
@@ -152,10 +153,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
     }
 
     fun editProduct(product: Product?) {
-        var product = product
-        if (product == null) {
-            product = Product()
-        }
+        val product = product ?: Product()
         delete.isVisible = !product.isNewProduct
         currentProduct = product
         binder.readBean(product)
