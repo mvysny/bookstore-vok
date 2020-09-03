@@ -4,13 +4,14 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // The Beverage Buddy sample project ported to Kotlin.
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
-val vaadinonkotlin_version = "0.7.1"
-val vaadin10_version = "13.0.2"
+val vaadinonkotlin_version = "0.8.2"
+val vaadin10_version = "14.3.4"
 
 plugins {
-    kotlin("jvm") version "1.3.21"
-    id("org.gretty") version "2.2.0"  // https://github.com/gretty-gradle-plugin/gretty
+    kotlin("jvm") version "1.4.0"
+    id("org.gretty") version "3.0.3"
     war
+    id("com.vaadin") version "0.8.0"
 }
 
 defaultTasks("clean", "build")
@@ -36,30 +37,37 @@ val staging by configurations.creating
 
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
-    compile("eu.vaadinonkotlin:vok-framework-v10-sql2o:$vaadinonkotlin_version")
-    compile(enforcedPlatform("com.vaadin:vaadin-bom:$vaadin10_version"))
+    implementation("eu.vaadinonkotlin:vok-framework-v10-vokdb:$vaadinonkotlin_version")
+    // Vaadin 14
+    implementation("com.vaadin:vaadin-core:$vaadin10_version") {
+        // Webjars are only needed when running in Vaadin 13 compatibility mode
+        listOf("com.vaadin.webjar", "org.webjars.bowergithub.insites",
+                "org.webjars.bowergithub.polymer", "org.webjars.bowergithub.polymerelements",
+                "org.webjars.bowergithub.vaadin", "org.webjars.bowergithub.webcomponents")
+                .forEach { exclude(group = it) }
+    }
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
-    compile(kotlin("stdlib-jdk8"))
+    implementation(kotlin("stdlib-jdk8"))
 
     // logging
-    // currently we are logging through the SLF4J API to LogBack. See src/main/resources/logback.xml file for the logger configuration
-    compile("ch.qos.logback:logback-classic:1.2.3")
-    compile("org.slf4j:slf4j-api:1.7.25")
+    // currently we are logging through the SLF4J API to SLF4J-Simple. See src/main/resources/simplelogger.properties file for the logger configuration
+    implementation("org.slf4j:slf4j-simple:1.7.30")
 
     // db
-    compile("org.flywaydb:flyway-core:5.2.4")
-    compile("com.h2database:h2:1.4.198") // remove this and replace it with a database driver of your choice.
+    implementation("com.zaxxer:HikariCP:3.4.5")
+    implementation("org.flywaydb:flyway-core:6.1.4")
+    implementation("com.h2database:h2:1.4.200") // remove this and replace it with a database driver of your choice.
 
     // REST
-    compile("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
+    implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testCompile("com.github.mvysny.kaributesting:karibu-testing-v10:1.1.4")
-    testCompile("com.github.mvysny.dynatest:dynatest-engine:0.15")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.3")
+    testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.17")
 
     // heroku app runner
-    staging("com.github.jsimone:webapp-runner-main:9.0.17.0")
+    staging("com.github.jsimone:webapp-runner-main:9.0.31.0")
 }
 
 tasks.withType<KotlinCompile> {
@@ -77,4 +85,11 @@ tasks {
     val stage by registering {
         dependsOn("build", copyToLib)
     }
+}
+
+vaadin {
+    if (gradle.startParameter.taskNames.contains("stage")) {
+        productionMode = true
+    }
+    pnpmEnable = true
 }

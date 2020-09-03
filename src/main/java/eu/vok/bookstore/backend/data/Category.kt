@@ -1,8 +1,8 @@
 package eu.vok.bookstore.backend.data
 
-import com.github.vokorm.Dao
-import com.github.vokorm.Entity
+import com.github.vokorm.KEntity
 import com.github.vokorm.db
+import com.gitlab.mvysny.jdbiorm.Dao
 import java.io.Serializable
 
 import javax.validation.constraints.NotNull
@@ -12,7 +12,7 @@ data class Category(
 
         @field:NotNull
         var name: String? = null
-) : Entity<Int>, Serializable {
+) : KEntity<Int>, Serializable {
     override fun delete() {
         db {
             ProductCategory.deleteForCategory(id!!)
@@ -20,12 +20,12 @@ data class Category(
         }
     }
 
-    companion object : Dao<Category> {
+    companion object : Dao<Category, Int>(Category::class.java) {
 
         fun getAllForProduct(id: Int): List<Category> = db {
-            con.createQuery("SELECT c.id, c.name FROM Category c, Product_Category pc WHERE c.id = pc.category_id and pc.product_id = :id")
-                    .addParameter("id", id)
-                    .executeAndFetch(Category::class.java)
+            handle.createQuery("SELECT c.id, c.name FROM Category c, Product_Category pc WHERE c.id = pc.category_id and pc.product_id = :id")
+                    .bind("id", id)
+                    .map(rowMapper).list()
         }
     }
 }

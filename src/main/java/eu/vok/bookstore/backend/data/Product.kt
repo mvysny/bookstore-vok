@@ -1,9 +1,8 @@
 package eu.vok.bookstore.backend.data
 
-import com.github.vokorm.As
-import com.github.vokorm.Dao
-import com.github.vokorm.Entity
-import com.github.vokorm.db
+import com.github.vokorm.*
+import com.gitlab.mvysny.jdbiorm.Dao
+import org.jdbi.v3.core.mapper.reflect.ColumnName
 import java.io.Serializable
 import java.math.BigDecimal
 
@@ -16,19 +15,19 @@ data class Product(
 
         @field:NotNull
         @field:Size(min = 2, message = "Product name must have at least two characters")
-        @As("PRODUCT_NAME")
+        @field:ColumnName("PRODUCT_NAME")
         var productName: String = "",
 
         @field:Min(0)
         var price: BigDecimal = BigDecimal.ZERO,
 
         @field:Min(value = 0, message = "Can't have negative amount in stock")
-        @As("STOCK_COUNT")
+        @field:ColumnName("STOCK_COUNT")
         var stockCount: Int? = 0,
 
         @field:NotNull
         var availability: Availability = Availability.COMING
-) : Entity<Int>, Serializable {
+) : KEntity<Int>, Serializable {
     val isNewProduct: Boolean
         get() = id == null
 
@@ -39,10 +38,10 @@ data class Product(
             db {
                 ProductCategory.deleteForProduct(id!!)
                 for (category in value) {
-                    con.createQuery("INSERT INTO Product_Category (product_id, category_id) values(:pid, :cid)")
-                            .addParameter("pid", id!!)
-                            .addParameter("cid", category.id!!)
-                            .executeUpdate()
+                    handle.createUpdate("INSERT INTO Product_Category (product_id, category_id) values(:pid, :cid)")
+                            .bind("pid", id!!)
+                            .bind("cid", category.id!!)
+                            .execute()
                 }
             }
         }
@@ -55,5 +54,5 @@ data class Product(
         }
     }
 
-    companion object : Dao<Product>
+    companion object : Dao<Product, Int>(Product::class.java)
 }

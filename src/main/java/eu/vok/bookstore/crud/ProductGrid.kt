@@ -8,7 +8,8 @@ import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
 import eu.vaadinonkotlin.vaadin10.VokDataProvider
 import eu.vaadinonkotlin.vaadin10.setFilter
-import eu.vaadinonkotlin.vaadin10.sql2o.dataProvider
+import eu.vaadinonkotlin.vaadin10.vokdb.dataLoader
+import eu.vaadinonkotlin.vaadin10.vokdb.setDataLoader
 import eu.vok.bookstore.backend.data.Product
 import java.text.DecimalFormat
 
@@ -75,7 +76,7 @@ class ProductGrid : Grid<Product>() {
             flexGrow = 12
         }
 
-        dataProvider = Product.dataProvider
+        setDataLoader(Product.dataLoader)
     }
 
     private fun formatCategories(product: Product): String = product.category.map { it.name!! }.sorted().joinToString()

@@ -27,7 +27,7 @@ class Menu : KComposite() {
                 icon = Icon(VaadinIcon.MENU)
 
                 onLeftClick {
-                    tabs.classNames.flip("show-tabs")
+                    tabs.classNames.toggle("show-tabs")
                 }
             }
 

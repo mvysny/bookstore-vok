@@ -10,6 +10,7 @@ import java.util.Random
 import eu.vok.bookstore.backend.data.Availability
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
+import eu.vok.bookstore.backend.data.ProductCategory
 
 object MockDataGenerator {
     private val random = Random(1)
@@ -29,6 +30,9 @@ object MockDataGenerator {
     }
 
     fun generate() {
+        db { ProductCategory.deleteAll() }
+        Product.deleteAll()
+        Category.deleteAll()
         createProducts(createCategories())
     }
 

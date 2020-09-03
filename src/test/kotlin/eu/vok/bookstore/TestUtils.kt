@@ -3,13 +3,15 @@ package eu.vok.bookstore
 import com.github.mvysny.kaributesting.v10.*
 import com.github.mvysny.dynatest.DynaNodeGroup
 import com.github.vokorm.db
-import com.github.vokorm.deleteAll
 import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.login.LoginForm
 import com.vaadin.flow.component.textfield.PasswordField
 import com.vaadin.flow.component.textfield.TextField
+import eu.vok.bookstore.authentication.LoginView
 import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
+import eu.vok.bookstore.backend.data.ProductCategory
 import eu.vok.bookstore.crud.SampleCrudView
 
 /**
@@ -22,7 +24,7 @@ fun DynaNodeGroup.usingDB() {
 
     // it's a good practice to clear up the db before every test, to start every test with a predefined state.
     fun cleanupDb() {
-        db { con.createQuery("DELETE FROM Product_Category").executeUpdate() }
+        db { ProductCategory.deleteAll() }
         Product.deleteAll()
         Category.deleteAll()
     }
@@ -40,9 +42,7 @@ fun DynaNodeGroup.usingUI(loginAs: String? = "user") {
     beforeEach {
         MockVaadin.setup(routes = Routes().autoDiscoverViews("eu.vok.bookstore"))
         if (loginAs != null) {
-            _get<TextField> { id = "username" }._value = loginAs
-            _get<PasswordField> { id = "password" }._value = loginAs
-            _get<Button> { caption = "Login" }._click()
+            _get<LoginForm>()._login(loginAs, loginAs)
             // expect that a successful login navigates to SampleCrudView
             _get<SampleCrudView>()
         }

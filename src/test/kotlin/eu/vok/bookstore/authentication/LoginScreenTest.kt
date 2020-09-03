@@ -14,6 +14,6 @@ class LoginScreenTest : DynaTest({
 
     test("the app is protected by the login screen") {
         UI.getCurrent().navigate(SampleCrudView::class.java)
-        _get<LoginScreen>()
+        _get<LoginView>()
     }
 })

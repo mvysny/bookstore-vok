@@ -34,7 +34,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
 
     private var newProduct: Button? = null
 
-    private val formListener = object : FormListener<Product> {
+    private val formListener: FormListener<Product> = object : FormListener<Product> {
         override fun cancel() {
             setFragmentParameter("")
             clearSelection()

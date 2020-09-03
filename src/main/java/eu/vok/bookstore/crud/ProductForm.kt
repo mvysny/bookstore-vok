@@ -13,6 +13,7 @@ import com.vaadin.flow.data.value.ValueChangeMode
 import eu.vok.bookstore.backend.data.Availability
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
+import java.io.Serializable
 import java.math.BigDecimal
 import java.text.DecimalFormat
 import java.text.NumberFormat
@@ -153,14 +154,14 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
     }
 
     fun editProduct(product: Product?) {
-        val product = product ?: Product()
+        val product: Product = product ?: Product()
         delete.isVisible = !product.isNewProduct
         currentProduct = product
         binder.readBean(product)
     }
 }
 
-interface FormListener<B> {
+interface FormListener<B> : Serializable {
     fun save(bean: B)
     fun discardChanges(bean: B)
     /**

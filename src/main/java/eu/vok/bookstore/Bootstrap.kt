@@ -1,11 +1,12 @@
 package eu.vok.bookstore
 
+import com.zaxxer.hikari.HikariConfig
+import com.zaxxer.hikari.HikariDataSource
 import eu.vaadinonkotlin.VaadinOnKotlin
 import eu.vaadinonkotlin.security.LoggedInUserResolver
 import eu.vaadinonkotlin.security.loggedInUserResolver
-import eu.vaadinonkotlin.sql2o.dataSource
-import eu.vaadinonkotlin.sql2o.dataSourceConfig
 import eu.vaadinonkotlin.vaadin10.Session
+import eu.vaadinonkotlin.vokdb.dataSource
 import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.mock.MockDataGenerator
@@ -33,12 +34,13 @@ class Bootstrap: ServletContextListener {
         // this will configure your database. For demo purposes, an in-memory embedded H2 database is used. To use a production-ready database:
         // 1. fill in the proper JDBC URL here
         // 2. make sure to include the database driver into the classpath, by adding a dependency on the driver into the build.gradle file.
-        VaadinOnKotlin.dataSourceConfig.apply {
+        val cfg = HikariConfig().apply {
             driverClassName = Driver::class.java.name
             jdbcUrl = "jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"
             username = "sa"
             password = ""
         }
+        VaadinOnKotlin.dataSource = HikariDataSource(cfg)
 
         // Initializes the VoK framework
         log.info("Initializing VaadinOnKotlin")
@@ -46,7 +48,7 @@ class Bootstrap: ServletContextListener {
 
         // Makes sure the database is up-to-date
         log.info("Running DB migrations")
-        val flyway = Flyway.configure()
+        val flyway: Flyway = Flyway.configure()
             .dataSource(VaadinOnKotlin.dataSource)
             .load()
         flyway.migrate()

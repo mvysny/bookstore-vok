@@ -1,5 +1,5 @@
 create TABLE Product (
-  id   int auto_increment PRIMARY KEY,
+  id   int auto_increment PRIMARY KEY not null,
   PRODUCT_NAME varchar(200) NOT NULL,
   price decimal(20, 2),
   STOCK_COUNT int,

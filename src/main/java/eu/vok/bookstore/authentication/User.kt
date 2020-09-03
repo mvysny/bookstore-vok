@@ -1,8 +1,8 @@
 package eu.vok.bookstore.authentication
 
-import com.github.vokorm.Dao
-import com.github.vokorm.Entity
-import com.github.vokorm.findSpecificBy
+import com.github.vokorm.KEntity
+import com.github.vokorm.findOneBy
+import com.gitlab.mvysny.jdbiorm.Dao
 import com.vaadin.flow.component.UI
 import eu.vaadinonkotlin.security.simple.HasPassword
 import eu.vaadinonkotlin.vaadin10.Session
@@ -18,12 +18,12 @@ import java.io.Serializable
 data class User(override var id: Long? = null,
                 var username: String = "",
                 override var hashedPassword: String = "",
-                var roles: String = "") : Entity<Long>, HasPassword {
-    companion object : Dao<User> {
+                var roles: String = "") : KEntity<Long>, HasPassword {
+    companion object : Dao<User, Long>(User::class.java) {
         /**
          * Finds user by his [username]. If there is no such user, returns `null`.
          */
-        fun findByUsername(username: String): User? = findSpecificBy { User::username eq username }
+        fun findByUsername(username: String): User? = findOneBy { User::username eq username }
     }
 }
 
@@ -43,8 +43,8 @@ class LoginManager: Serializable {
      */
     val isLoggedIn: Boolean get() = user != null
 
-    fun signIn(username: String, password: String): Boolean {
-        val user = User.findByUsername(username) ?: return false
+    fun login(username: String, password: String): Boolean {
+        val user: User = User.findByUsername(username) ?: return false
         if (!user.passwordMatches(password)) return false
         login(user)
         return true
@@ -73,7 +73,7 @@ class LoginManager: Serializable {
     }
 
     fun getCurrentUserRoles(): Set<String> {
-        val roles = user?.roles ?: return setOf()
+        val roles: String = user?.roles ?: return setOf()
         return roles.split(",").toSet()
     }
 
