@@ -39,8 +39,14 @@ fun DynaNodeGroup.usingDB() {
 fun DynaNodeGroup.usingUI(loginAs: String? = "user") {
     usingDB()
 
+    lateinit var routes: Routes
+    beforeGroup {
+        routes = Routes().autoDiscoverViews("eu.vok.bookstore")
+        routes.errorRoutes.remove(MockRouteNotFoundError::class.java)
+    }
+
     beforeEach {
-        MockVaadin.setup(routes = Routes().autoDiscoverViews("eu.vok.bookstore"))
+        MockVaadin.setup(routes)
         if (loginAs != null) {
             _get<LoginForm>()._login(loginAs, loginAs)
             // expect that a successful login navigates to SampleCrudView

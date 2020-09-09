@@ -13,7 +13,7 @@ import javax.servlet.http.HttpServletResponse
  * View shown when trying to navigate to a view that does not exist using
  */
 @ParentLayout(MainLayout::class)
-class ErrorView : KComposite(), HasErrorParameter<NotFoundException> {
+class NotFoundView : KComposite(), HasErrorParameter<NotFoundException> {
 
     private lateinit var explanation: Span
     private val root = ui {
