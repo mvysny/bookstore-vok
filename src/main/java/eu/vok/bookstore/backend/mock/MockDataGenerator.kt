@@ -1,16 +1,13 @@
 package eu.vok.bookstore.backend.mock
 
 import com.github.vokorm.db
-import com.github.vokorm.findAll
-import com.github.vokorm.findById
 import java.math.BigDecimal
-import java.util.HashSet
-import java.util.Random
 
 import eu.vok.bookstore.backend.data.Availability
 import eu.vok.bookstore.backend.data.Category
 import eu.vok.bookstore.backend.data.Product
 import eu.vok.bookstore.backend.data.ProductCategory
+import java.util.*
 
 object MockDataGenerator {
     private val random = Random(1)
@@ -49,8 +46,7 @@ object MockDataGenerator {
         p.productName = generateName()
 
         p.price = BigDecimal((random.nextInt(250) + 50) / 10.0)
-        p.availability = Availability.values()[random.nextInt(Availability
-                .values().size)]
+        p.availability = Availability.values().random()
         if (p.availability == Availability.AVAILABLE) {
             p.stockCount = random.nextInt(523)
         }
@@ -65,16 +61,11 @@ object MockDataGenerator {
         val nr = random.nextInt(max) + min
         val productCategories = HashSet<Category>()
         for (i in 0 until nr) {
-            productCategories.add(categories[random.nextInt(categories
-                    .size)])
+            productCategories.add(categories.random())
         }
 
         return productCategories
     }
 
-    private fun generateName(): String {
-        return (word1[random.nextInt(word1.size)] + " "
-                + word2[random.nextInt(word2.size)])
-    }
-
+    private fun generateName(): String = "${word1.random()} ${word2.random()}"
 }

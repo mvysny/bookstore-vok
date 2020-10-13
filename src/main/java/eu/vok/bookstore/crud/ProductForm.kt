@@ -153,8 +153,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
         }
     }
 
-    fun editProduct(product: Product?) {
-        val product: Product = product ?: Product()
+    fun editProduct(product: Product = Product()) {
         delete.isVisible = !product.isNewProduct
         currentProduct = product
         binder.readBean(product)

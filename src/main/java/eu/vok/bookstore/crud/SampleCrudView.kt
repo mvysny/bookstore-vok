@@ -1,7 +1,6 @@
 package eu.vok.bookstore.crud
 
 import com.github.mvysny.karibudsl.v10.*
-import com.github.vokorm.findById
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.icon.VaadinIcon
@@ -128,7 +127,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
 
     private fun editProduct(product: Product?) {
         showForm(product != null)
-        form.editProduct(product)
+        form.editProduct(product ?: Product())
     }
 
     private fun showForm(show: Boolean) {
@@ -143,7 +142,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
     }
 
     override fun setParameter(event: BeforeEvent, @OptionalParameter parameter: String?) {
-        if (parameter != null && !parameter.isEmpty()) {
+        if (!parameter.isNullOrEmpty()) {
             if (parameter == "new") {
                 newProduct()
             } else {

@@ -3,12 +3,12 @@ package eu.vok.bookstore.crud
 import com.github.mvysny.karibudsl.v10.VaadinDsl
 import com.github.mvysny.karibudsl.v10.addColumnFor
 import com.github.mvysny.karibudsl.v10.init
+import com.github.mvysny.vokdataloader.DataLoader
+import com.github.mvysny.vokdataloader.withFilter
+import com.github.vokorm.dataloader.dataLoader
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
-import eu.vaadinonkotlin.vaadin10.VokDataProvider
-import eu.vaadinonkotlin.vaadin10.setFilter
-import eu.vaadinonkotlin.vaadin10.vokdb.dataLoader
 import eu.vaadinonkotlin.vaadin10.vokdb.setDataLoader
 import eu.vok.bookstore.backend.data.Product
 import java.text.DecimalFormat
@@ -76,19 +76,18 @@ class ProductGrid : Grid<Product>() {
             flexGrow = 12
         }
 
-        setDataLoader(Product.dataLoader)
+        setFilter("")
     }
 
     private fun formatCategories(product: Product): String = product.category.map { it.name!! }.sorted().joinToString()
 
     fun setFilter(filter: String) {
         @Suppress("UNCHECKED_CAST")
-        val dp = dataProvider as VokDataProvider<Product>
-        if (filter.isBlank()) {
-            dp.setFilter(null)
-        } else {
-            dp.setFilter { (Product::productName ilike filter.trim()) or ("availability ilike :a"("a" to filter.trim() + "%")) }
+        var dp: DataLoader<Product> = Product.dataLoader
+        if (!filter.isBlank()) {
+            dp = dp.withFilter { (Product::productName istartsWith filter.trim()) or ("availability ilike :a"("a" to filter.trim() + "%")) }
         }
+        setDataLoader(dp)
     }
 }
 
