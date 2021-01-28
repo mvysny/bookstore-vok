@@ -4,7 +4,7 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // The Beverage Buddy sample project ported to Kotlin.
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
-val vaadinonkotlin_version = "0.9.0"
+val vaadinonkotlin_version = "0.9.1"
 val vaadin10_version = "14.4.6"
 
 plugins {
@@ -38,7 +38,6 @@ val staging by configurations.creating
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
     implementation("eu.vaadinonkotlin:vok-framework-v10-vokdb:$vaadinonkotlin_version")
-    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.4")
     // Vaadin 14
     implementation("com.vaadin:vaadin-core:$vaadin10_version") {
         // Webjars are only needed when running in Vaadin 13 compatibility mode
