@@ -5,10 +5,10 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
 val vaadinonkotlin_version = "0.9.0"
-val vaadin10_version = "14.4.3"
+val vaadin10_version = "14.4.6"
 
 plugins {
-    kotlin("jvm") version "1.4.20"
+    kotlin("jvm") version "1.4.21"
     id("org.gretty") version "3.0.3"
     war
     id("com.vaadin") version "0.14.3.7"
@@ -38,6 +38,7 @@ val staging by configurations.creating
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
     implementation("eu.vaadinonkotlin:vok-framework-v10-vokdb:$vaadinonkotlin_version")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl:1.0.4")
     // Vaadin 14
     implementation("com.vaadin:vaadin-core:$vaadin10_version") {
         // Webjars are only needed when running in Vaadin 13 compatibility mode
@@ -63,7 +64,7 @@ dependencies {
     implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.6")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.8")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.19")
 
     // heroku app runner
