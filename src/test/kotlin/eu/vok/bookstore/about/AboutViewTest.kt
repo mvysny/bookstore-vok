@@ -11,6 +11,6 @@ class AboutViewTest : DynaTest({
 
     test("smoke") {
         UI.getCurrent().navigate(AboutView::class.java)
-        _get<Span> { textContains("This application is using Vaadin Flow") }
+        _get<Span> { textContains("This application is running on Vaadin") }
     }
 })
