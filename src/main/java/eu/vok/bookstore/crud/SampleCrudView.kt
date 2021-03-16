@@ -172,8 +172,4 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
 
         UI.getCurrent().navigate(SampleCrudView::class.java, fragmentParameter)
     }
-
-    companion object {
-        val VIEW_NAME = "Inventory"
-    }
 }

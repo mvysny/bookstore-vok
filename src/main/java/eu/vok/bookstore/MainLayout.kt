@@ -3,9 +3,7 @@ package eu.vok.bookstore
 import com.github.mvysny.karibudsl.v10.KComposite
 import com.github.mvysny.karibudsl.v10.flexLayout
 import com.vaadin.flow.component.dependency.CssImport
-import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.icon.VaadinIcon
-import com.vaadin.flow.component.orderedlayout.FlexLayout
 import com.vaadin.flow.router.BeforeEnterEvent
 import com.vaadin.flow.router.BeforeEnterObserver
 import com.vaadin.flow.router.RouterLayout
@@ -37,10 +35,9 @@ class MainLayout : KComposite(), RouterLayout, BeforeEnterObserver {
             setSizeFull(); className = "main-layout"
 
             menu {
-                addView(SampleCrudView::class, SampleCrudView.VIEW_NAME, VaadinIcon.EDIT)
-                addView(AboutView::class, AboutView.VIEW_NAME, VaadinIcon.INFO_CIRCLE)
+                addView(SampleCrudView::class, "Inventory", VaadinIcon.EDIT)
+                addView(AboutView::class, "About", VaadinIcon.INFO_CIRCLE)
             }
         }
     }
 }
-
