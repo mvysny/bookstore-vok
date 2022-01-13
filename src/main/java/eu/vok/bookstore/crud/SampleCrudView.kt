@@ -1,6 +1,7 @@
 package eu.vok.bookstore.crud
 
 import com.github.mvysny.karibudsl.v10.*
+import com.github.mvysny.kaributools.setPrimary
 import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.icon.VaadinIcon
@@ -83,7 +84,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
                 }
                 setVerticalComponentAlignment(FlexComponent.Alignment.START, filter)
                 newProduct = button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
-                    element.themeList.add("primary")
+                    setPrimary()
                     onLeftClick { newProduct() }
                 }
             }
