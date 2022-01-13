@@ -9,7 +9,7 @@ import com.vaadin.flow.router.BeforeEnterObserver
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
 import eu.vaadinonkotlin.security.AllowAll
-import eu.vaadinonkotlin.vaadin10.Session
+import eu.vaadinonkotlin.vaadin.Session
 
 /**
  * UI content when the user is not logged in yet.
@@ -18,13 +18,7 @@ import eu.vaadinonkotlin.vaadin10.Session
 @PageTitle("Login")
 @StyleSheet("css/shared-styles.css")
 @AllowAll
-class LoginView : KComposite(), BeforeEnterObserver {
-
-    override fun beforeEnter(event: BeforeEnterEvent) {
-        if (Session.loginManager.isLoggedIn) {
-            event.rerouteTo("")
-        }
-    }
+class LoginView : KComposite() {
 
     private lateinit var loginForm: LoginForm
     private val root = ui {

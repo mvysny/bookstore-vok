@@ -4,20 +4,21 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // The Beverage Buddy sample project ported to Kotlin.
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
-val vaadinonkotlin_version = "0.9.1"
-val vaadin10_version = "14.4.9"
+val vaadinonkotlin_version = "0.12.0"
+val vaadin_version = "23.0.0.alpha1"
 
 plugins {
     kotlin("jvm") version "1.6.10"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "0.14.3.7"
+    id("com.vaadin") version "23.0.0.alpha1"
 }
 
 defaultTasks("clean", "build")
 
 repositories {
-    jcenter()
+    mavenCentral()
+    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
 }
 
 gretty {
@@ -37,15 +38,10 @@ val staging by configurations.creating
 
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
-    implementation("eu.vaadinonkotlin:vok-framework-v10-vokdb:$vaadinonkotlin_version")
+    implementation("eu.vaadinonkotlin:vok-framework-vokdb:$vaadinonkotlin_version")
+    implementation("eu.vaadinonkotlin:vok-security:$vaadinonkotlin_version")
     // Vaadin 14
-    implementation("com.vaadin:vaadin-core:$vaadin10_version") {
-        // Webjars are only needed when running in Vaadin 13 compatibility mode
-        listOf("com.vaadin.webjar", "org.webjars.bowergithub.insites",
-                "org.webjars.bowergithub.polymer", "org.webjars.bowergithub.polymerelements",
-                "org.webjars.bowergithub.vaadin", "org.webjars.bowergithub.webcomponents")
-                .forEach { exclude(group = it) }
-    }
+    implementation("com.vaadin:vaadin-core:$vaadin_version")
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
     implementation(kotlin("stdlib-jdk8"))
@@ -63,7 +59,7 @@ dependencies {
     implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.2.12")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.9")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.22")
 
     // heroku app runner

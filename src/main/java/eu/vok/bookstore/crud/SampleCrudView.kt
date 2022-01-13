@@ -15,7 +15,7 @@ import com.vaadin.flow.router.OptionalParameter
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.router.RouteAlias
 import eu.vaadinonkotlin.security.AllowAllUsers
-import eu.vaadinonkotlin.vaadin10.Session
+import eu.vaadinonkotlin.vaadin.Session
 import eu.vok.bookstore.MainLayout
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.data.Product

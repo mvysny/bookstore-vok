@@ -3,18 +3,24 @@ package eu.vok.bookstore.authentication
 import com.github.vokorm.KEntity
 import com.github.vokorm.findOneBy
 import com.gitlab.mvysny.jdbiorm.Dao
+import com.gitlab.mvysny.jdbiorm.Table
 import com.vaadin.flow.component.UI
+import com.vaadin.flow.server.VaadinRequest
+import com.vaadin.flow.server.VaadinService
+import eu.vaadinonkotlin.security.BasicUserPrincipal
 import eu.vaadinonkotlin.security.simple.HasPassword
-import eu.vaadinonkotlin.vaadin10.Session
+import eu.vaadinonkotlin.vaadin.Session
 import java.io.Serializable
+import java.security.Principal
 
 /**
- * Represents an user. Stored in a database; see [Entity] and [Accessing Databases](http://www.vaadinonkotlin.eu/databases.html) for more details.
+ * Represents an user. Stored in a database; see [KEntity] and [Accessing Databases](http://www.vaadinonkotlin.eu/databases.html) for more details.
  * Implements the [HasPassword] helper interface which provides password hashing functionality. Remember to set the
  * password via [HasPassword.setPassword] and verify the password via [HasPassword.passwordMatches].
  * @property username user name, unique
  * @property roles comma-separated list of roles
  */
+@Table("users")
 data class User(override var id: Long? = null,
                 var username: String = "",
                 override var hashedPassword: String = "",
@@ -38,6 +44,11 @@ class LoginManager: Serializable {
     var user: User? = null
     private set
 
+    fun getPrincipal(): Principal? {
+        val user = user
+        return if (user == null) null else BasicUserPrincipal(user.username)
+    }
+
     /**
      * `true` if the user is logged in (the [user] property is not null), `false` if not.
      */
@@ -54,11 +65,15 @@ class LoginManager: Serializable {
      * Logs in an [user]. Fails if the user is already logged in.
      */
     private fun login(user: User) {
-        check(this.user == null) { "An user is already logged in" }
         this.user = user
-        // this will cause the UI to be re-created. Since the user is now logged in and present in the session,
-        // the UI should now initialize properly and should not show the LoginView.
-        UI.getCurrent().page.reload()
+
+        // creates a new session after login, to prevent session fixation attack
+        VaadinService.reinitializeSession(VaadinRequest.getCurrent())
+
+        // navigate the user away from the LoginView and to the landing page.
+        // all logged-in users must be able to see the landing page, otherwise they will
+        // be redirected back to the LoginView.
+        UI.getCurrent().navigate("")
     }
 
     /**

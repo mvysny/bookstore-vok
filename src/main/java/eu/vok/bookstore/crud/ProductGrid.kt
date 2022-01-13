@@ -1,7 +1,7 @@
 package eu.vok.bookstore.crud
 
 import com.github.mvysny.karibudsl.v10.VaadinDsl
-import com.github.mvysny.karibudsl.v10.addColumnFor
+import com.github.mvysny.karibudsl.v10.columnFor
 import com.github.mvysny.karibudsl.v10.init
 import com.github.mvysny.vokdataloader.DataLoader
 import com.github.mvysny.vokdataloader.withFilter
@@ -9,7 +9,7 @@ import com.github.vokorm.dataloader.dataLoader
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.TemplateRenderer
-import eu.vaadinonkotlin.vaadin10.vokdb.setDataLoader
+import eu.vaadinonkotlin.vaadin.vokdb.setDataLoader
 import eu.vok.bookstore.backend.data.Product
 import java.text.DecimalFormat
 
@@ -26,7 +26,7 @@ class ProductGrid : Grid<Product>() {
     init {
         setSizeFull()
 
-        addColumnFor(Product::productName, sortable = true) {
+        columnFor(Product::productName, sortable = true) {
             setHeader("Product name")
             flexGrow = 20
         }

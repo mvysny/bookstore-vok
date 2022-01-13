@@ -1,6 +1,7 @@
 package eu.vok.bookstore
 
 import com.github.mvysny.karibudsl.v10.*
+import com.github.mvysny.kaributools.toggle
 import com.vaadin.flow.component.Component
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.UI
@@ -38,9 +39,7 @@ class Menu : KComposite() {
 
                 // Note! Image resource url is resolved here as it is dependent on the
                 // execution mode (development or production) and browser ES level support
-                val resolvedImage = VaadinServletService.getCurrent()
-                        .resolveResource("frontend://img/table-logo.png",
-                                VaadinSession.getCurrent().browser)
+                val resolvedImage = VaadinServletService.getCurrent().resolveResource("./img/table-logo.png")
                 image(resolvedImage, "")
 
                 label("My CRUD")

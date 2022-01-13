@@ -2,10 +2,8 @@ package eu.vok.bookstore
 
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
-import eu.vaadinonkotlin.vaadin10.Session
-import eu.vaadinonkotlin.vaadin10.VokSecurity
+import eu.vaadinonkotlin.security.VokViewAccessChecker
 import eu.vok.bookstore.authentication.LoginView
-import eu.vok.bookstore.authentication.loginManager
 
 /**
  * This class is used to listen to BeforeEnter event of all UIs in order to
@@ -16,13 +14,9 @@ import eu.vok.bookstore.authentication.loginManager
 class BookstoreInitListener : VaadinServiceInitListener {
     override fun serviceInit(initEvent: ServiceInitEvent) {
         initEvent.source.addUIInitListener { uiInitEvent ->
-            uiInitEvent.ui.addBeforeEnterListener { enterEvent ->
-                if (!Session.loginManager.isLoggedIn && enterEvent.navigationTarget != LoginView::class.java) {
-                    enterEvent.rerouteTo(LoginView::class.java)
-                } else {
-                    VokSecurity.checkPermissionsOfView(enterEvent.navigationTarget)
-                }
-            }
+            val checker = VokViewAccessChecker()
+            checker.setLoginView(LoginView::class.java)
+            uiInitEvent.ui.addBeforeEnterListener(checker)
         }
     }
 }

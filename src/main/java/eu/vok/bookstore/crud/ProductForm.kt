@@ -1,7 +1,9 @@
 package eu.vok.bookstore.crud
 
 import com.github.mvysny.karibudsl.v10.*
-import com.github.vokorm.findAll
+import com.github.mvysny.kaributools.addShortcut
+import com.github.mvysny.kaributools.setPrimary
+import com.github.mvysny.kaributools.shortcut
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.button.Button
