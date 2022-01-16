@@ -41,7 +41,9 @@ dependencies {
     implementation("eu.vaadinonkotlin:vok-framework-vokdb:$vaadinonkotlin_version")
     implementation("eu.vaadinonkotlin:vok-security:$vaadinonkotlin_version")
     // Vaadin 14
-    implementation("com.vaadin:vaadin-core:$vaadin_version")
+    implementation("com.vaadin:vaadin-core:$vaadin_version") {
+        exclude(module = "fusion-endpoint") // exclude fusion: it brings tons of dependencies (including swagger)
+    }
     providedCompile("javax.servlet:javax.servlet-api:3.1.0")
 
     implementation(kotlin("stdlib-jdk8"))
