@@ -5,20 +5,19 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
 val vaadinonkotlin_version = "0.12.1"
-val vaadin_version = "23.0.3"
+val vaadin_version = "23.0.6"
 
 plugins {
-    kotlin("jvm") version "1.6.10"
+    kotlin("jvm") version "1.6.21"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.0.3"
+    id("com.vaadin") version "23.0.6"
 }
 
 defaultTasks("clean", "build")
 
 repositories {
     mavenCentral()
-    maven { setUrl("https://maven.vaadin.com/vaadin-prereleases") }
 }
 
 gretty {
@@ -61,7 +60,7 @@ dependencies {
     implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.11")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.12")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.24")
 
     // heroku app runner
@@ -89,5 +88,4 @@ vaadin {
     if (gradle.startParameter.taskNames.contains("stage")) {
         productionMode = true
     }
-//    nodeVersion = "v16.13.2" // workaround for https://github.com/vaadin/flow/issues/12732
 }
