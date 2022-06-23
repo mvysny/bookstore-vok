@@ -5,13 +5,13 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 // Original project: https://github.com/vaadin/beverage-starter-flow
 
 val vaadinonkotlin_version = "0.13.0"
-val vaadin_version = "23.1.0"
+val vaadin_version = "23.1.1"
 
 plugins {
     kotlin("jvm") version "1.7.0"
     id("org.gretty") version "3.0.6"
     war
-    id("com.vaadin") version "23.1.0"
+    id("com.vaadin") version "23.1.1"
 }
 
 defaultTasks("clean", "build")
@@ -58,7 +58,7 @@ dependencies {
     implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.15")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.16")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.24")
 
     // heroku app runner
