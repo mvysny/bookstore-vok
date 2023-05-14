@@ -4,11 +4,9 @@ import com.github.mvysny.karibudsl.v10.*
 import com.vaadin.flow.component.dependency.StyleSheet
 import com.vaadin.flow.component.login.LoginForm
 import com.vaadin.flow.component.login.LoginI18n
-import com.vaadin.flow.router.BeforeEnterEvent
-import com.vaadin.flow.router.BeforeEnterObserver
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
-import eu.vaadinonkotlin.security.AllowAll
+import com.vaadin.flow.server.auth.AnonymousAllowed
 import eu.vaadinonkotlin.vaadin.Session
 
 /**
@@ -16,8 +14,8 @@ import eu.vaadinonkotlin.vaadin.Session
  */
 @Route("login")
 @PageTitle("Login")
-@StyleSheet("css/shared-styles.css")
-@AllowAll
+@StyleSheet("./css/shared-styles.css")
+@AnonymousAllowed
 class LoginView : KComposite() {
 
     private lateinit var loginForm: LoginForm

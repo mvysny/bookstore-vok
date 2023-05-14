@@ -1,9 +1,11 @@
 package eu.vok.bookstore
 
+import com.github.mvysny.vaadinsimplesecurity.SimpleViewAccessChecker
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
-import eu.vaadinonkotlin.security.VokViewAccessChecker
+import eu.vaadinonkotlin.vaadin.Session
 import eu.vok.bookstore.authentication.LoginView
+import eu.vok.bookstore.authentication.loginManager
 
 /**
  * This class is used to listen to BeforeEnter event of all UIs in order to
@@ -12,10 +14,13 @@ import eu.vok.bookstore.authentication.LoginView
  * `com.vaadin.flow.server.VaadinServiceInitListener` in `META-INF/services`.
  */
 class BookstoreInitListener : VaadinServiceInitListener {
+    private val checker = SimpleViewAccessChecker.usingService { Session.loginManager }
+    init {
+        checker.setLoginView(LoginView::class.java)
+    }
+
     override fun serviceInit(initEvent: ServiceInitEvent) {
         initEvent.source.addUIInitListener { uiInitEvent ->
-            val checker = VokViewAccessChecker()
-            checker.setLoginView(LoginView::class.java)
             uiInitEvent.ui.addBeforeEnterListener(checker)
         }
     }
