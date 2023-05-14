@@ -1,16 +1,13 @@
 package eu.vok.bookstore
 
-import com.vaadin.flow.component.dependency.CssImport
 import com.vaadin.flow.component.page.AppShellConfigurator
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import eu.vaadinonkotlin.VaadinOnKotlin
-import eu.vaadinonkotlin.vaadin.Session
 import eu.vaadinonkotlin.vokdb.dataSource
 import eu.vok.bookstore.authentication.User
-import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.mock.MockDataGenerator
 import jakarta.servlet.ServletContextEvent
 import jakarta.servlet.ServletContextListener
@@ -18,7 +15,6 @@ import jakarta.servlet.annotation.WebListener
 import org.flywaydb.core.Flyway
 import org.h2.Driver
 import org.slf4j.LoggerFactory
-import java.security.Principal
 
 /**
  * Boots the app:
