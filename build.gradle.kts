@@ -51,9 +51,6 @@ dependencies {
     implementation("org.flywaydb:flyway-core:9.15.2")
     implementation("com.h2database:h2:2.1.214") // remove this and replace it with a database driver of your choice.
 
-    // REST
-    implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
-
     // testing
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v24:2.0.2")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.24")
