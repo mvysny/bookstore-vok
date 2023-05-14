@@ -80,15 +80,10 @@ class SampleCrudView : KComposite(), HasUrlParameter<String> {
                         valueChangeMode = ValueChangeMode.EAGER
                         isExpand = true
                     }
-                    setVerticalComponentAlignment(
-                        FlexComponent.Alignment.START,
-                        filter
-                    )
-                    newProduct =
-                        button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
-                            setPrimary()
-                            onLeftClick { newProduct() }
-                        }
+                    newProduct = button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
+                        setPrimary()
+                        onLeftClick { newProduct() }
+                    }
                 }
                 grid = productGrid {
                     asSingleSelect().addValueChangeListener { event ->
