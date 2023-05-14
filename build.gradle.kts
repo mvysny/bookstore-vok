@@ -70,6 +70,5 @@ java {
 }
 
 application {
-    mainClass.set("com.vaadin.starter.beveragebuddy.MainKt")
+    mainClass.set("eu.vok.bookstore.MainKt")
 }
-
