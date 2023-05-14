@@ -15,18 +15,18 @@ import com.vaadin.flow.router.HasUrlParameter
 import com.vaadin.flow.router.OptionalParameter
 import com.vaadin.flow.router.Route
 import com.vaadin.flow.router.RouteAlias
-import eu.vaadinonkotlin.security.AllowAllUsers
 import eu.vaadinonkotlin.vaadin.Session
 import eu.vok.bookstore.MainLayout
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.data.Product
+import jakarta.annotation.security.PermitAll
 
 /**
  * A view for performing create-read-update-delete operations on products.
  */
 @Route(value = "Inventory", layout = MainLayout::class)
 @RouteAlias(value = "", layout = MainLayout::class)
-@AllowAllUsers
+@PermitAll
 class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
     private lateinit var grid: ProductGrid
     private val form: ProductForm
@@ -165,12 +165,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
      * Update the fragment without causing navigator to change view
      */
     private fun setFragmentParameter(productId: String?) {
-        val fragmentParameter: String = if (productId == null || productId.isEmpty()) {
-            ""
-        } else {
-            productId
-        }
-
+        val fragmentParameter: String = if (productId.isNullOrEmpty()) "" else productId
         UI.getCurrent().navigate(SampleCrudView::class.java, fragmentParameter)
     }
 }

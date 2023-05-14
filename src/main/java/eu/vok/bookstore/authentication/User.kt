@@ -19,7 +19,7 @@ import eu.vaadinonkotlin.vaadin.Session
 @Table("users")
 data class User(override var id: Long? = null,
                 var username: String = "",
-                var hashedPassword: String = "",
+                private var hashedPassword: String = "",
                 var roles: String = "") : KEntity<Long>, HasPassword {
     companion object : Dao<User, Long>(User::class.java) {
         /**

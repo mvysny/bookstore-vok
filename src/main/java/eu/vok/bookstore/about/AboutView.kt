@@ -5,12 +5,12 @@ import com.github.mvysny.kaributools.VaadinVersion
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.router.PageTitle
 import com.vaadin.flow.router.Route
-import eu.vaadinonkotlin.security.AllowAllUsers
 import eu.vok.bookstore.MainLayout
+import jakarta.annotation.security.PermitAll
 
 @Route(value = "About", layout = MainLayout::class)
 @PageTitle("About")
-@AllowAllUsers
+@PermitAll
 class AboutView : KComposite() {
     private val root = ui {
         horizontalLayout {

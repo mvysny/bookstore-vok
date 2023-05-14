@@ -5,7 +5,7 @@ import com.github.vokorm.db
 import com.gitlab.mvysny.jdbiorm.Dao
 import java.io.Serializable
 
-import javax.validation.constraints.NotNull
+import jakarta.validation.constraints.NotNull
 
 data class Category(
         override var id: Int? = null,

@@ -8,7 +8,7 @@ import com.github.mvysny.vokdataloader.withFilter
 import com.github.vokorm.dataloader.dataLoader
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.Grid
-import com.vaadin.flow.data.renderer.TemplateRenderer
+import com.vaadin.flow.data.renderer.LitRenderer
 import eu.vaadinonkotlin.vaadin.vokdb.setDataLoader
 import eu.vok.bookstore.backend.data.Product
 import java.text.DecimalFormat
@@ -39,7 +39,7 @@ class ProductGrid : Grid<Product>() {
 
         // To change the text alignment of the column, a template is used.
         val priceTemplate = "<div style='text-align: right'>[[item.price]]</div>"
-        addColumn(TemplateRenderer.of<Product>(priceTemplate)
+        addColumn(LitRenderer.of<Product>(priceTemplate)
                 .withProperty("price") { (_, _, price) -> decimalFormat.format(price) + " €" }).apply {
             setHeader("Price")
             isSortable = true
@@ -52,7 +52,7 @@ class ProductGrid : Grid<Product>() {
         // Available, Coming and Discontinued, are defined in shared-styles.css and are
         // used here in availabilityTemplate.
         val availabilityTemplate = """<iron-icon icon="vaadin:circle" class-name="[[item.availability]]"></iron-icon> [[item.availability]]"""
-        addColumn(TemplateRenderer.of<Product>(availabilityTemplate)
+        addColumn(LitRenderer.of<Product>(availabilityTemplate)
                 .withProperty("availability") { (_, _, _, _, availability) -> availability.displayableName }).apply {
             setHeader("Availability")
             isSortable = true
@@ -62,7 +62,7 @@ class ProductGrid : Grid<Product>() {
 
         // To change the text alignment of the column, a template is used.
         val stockCountTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>"
-        addColumn(TemplateRenderer.of<Product>(stockCountTemplate)
+        addColumn(LitRenderer.of<Product>(stockCountTemplate)
                 .withProperty("stockCount") { (_, _, _, stockCount) -> if (stockCount == 0) "-" else Integer.toString(stockCount!!) }).apply {
             setHeader("Stock count")
             isSortable = true
@@ -84,7 +84,7 @@ class ProductGrid : Grid<Product>() {
     fun setFilter(filter: String) {
         @Suppress("UNCHECKED_CAST")
         var dp: DataLoader<Product> = Product.dataLoader
-        if (!filter.isBlank()) {
+        if (filter.isNotBlank()) {
             dp = dp.withFilter { (Product::productName istartsWith filter.trim()) or ("availability ilike :a"("a" to filter.trim() + "%")) }
         }
         setDataLoader(dp)

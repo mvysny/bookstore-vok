@@ -5,9 +5,8 @@ import com.github.mvysny.karibudsl.v10.h1
 import com.github.mvysny.karibudsl.v10.span
 import com.github.mvysny.karibudsl.v10.verticalLayout
 import com.vaadin.flow.component.html.Span
-import com.vaadin.flow.component.orderedlayout.VerticalLayout
 import com.vaadin.flow.router.*
-import javax.servlet.http.HttpServletResponse
+import jakarta.servlet.http.HttpServletResponse
 
 /**
  * View shown when trying to navigate to a view that does not exist using

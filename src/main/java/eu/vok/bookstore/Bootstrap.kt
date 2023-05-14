@@ -7,20 +7,18 @@ import com.vaadin.flow.theme.lumo.Lumo
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import eu.vaadinonkotlin.VaadinOnKotlin
-import eu.vaadinonkotlin.security.LoggedInUserResolver
-import eu.vaadinonkotlin.security.loggedInUserResolver
 import eu.vaadinonkotlin.vaadin.Session
 import eu.vaadinonkotlin.vokdb.dataSource
 import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.backend.mock.MockDataGenerator
+import jakarta.servlet.ServletContextEvent
+import jakarta.servlet.ServletContextListener
+import jakarta.servlet.annotation.WebListener
 import org.flywaydb.core.Flyway
 import org.h2.Driver
 import org.slf4j.LoggerFactory
 import java.security.Principal
-import javax.servlet.ServletContextEvent
-import javax.servlet.ServletContextListener
-import javax.servlet.annotation.WebListener
 
 /**
  * Boots the app:
@@ -58,11 +56,7 @@ class Bootstrap: ServletContextListener {
             .load()
         flyway.migrate()
 
-        // setup security
-        VaadinOnKotlin.loggedInUserResolver = object : LoggedInUserResolver {
-            override fun getCurrentUser(): Principal? = Session.loginManager.getPrincipal()
-            override fun getCurrentUserRoles(): Set<String> = Session.loginManager.getCurrentUserRoles()
-        }
+        // create users; security is set up in BookstoreInitListener
         User(username = "admin", roles = "admin,user").apply { setPassword("admin") } .save()
         User(username = "user", roles = "user").apply { setPassword("user") } .save()
 
