@@ -14,6 +14,9 @@ import com.vaadin.flow.server.VaadinServletService
 import com.vaadin.flow.server.VaadinSession
 import kotlin.reflect.KClass
 
+/**
+ * The navigation menu component. Used by [MainLayout].
+ */
 class Menu : KComposite() {
     private lateinit var tabs: Tabs
 

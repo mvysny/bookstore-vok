@@ -7,10 +7,12 @@ import com.github.mvysny.vokdataloader.DataLoader
 import com.github.mvysny.vokdataloader.withFilter
 import com.github.vokorm.dataloader.dataLoader
 import com.vaadin.flow.component.HasComponents
+import com.vaadin.flow.component.grid.ColumnTextAlign
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.LitRenderer
 import eu.vaadinonkotlin.vaadin.vokdb.setDataLoader
 import eu.vok.bookstore.backend.data.Product
+import java.math.BigDecimal
 import java.text.DecimalFormat
 
 /**
@@ -31,27 +33,18 @@ class ProductGrid : Grid<Product>() {
             flexGrow = 20
         }
 
-        // Format and add " €" to price
-        val decimalFormat = DecimalFormat().apply {
-            maximumFractionDigits = 2
-            minimumFractionDigits = 2
-        }
-
         // To change the text alignment of the column, a template is used.
-        val priceTemplate = "<div style='text-align: right'>[[item.price]]</div>"
-        addColumn(LitRenderer.of<Product>(priceTemplate)
-                .withProperty("price") { (_, _, price) -> decimalFormat.format(price) + " €" }).apply {
+        columnFor(Product::price, converter = { formatCurrency(it) }) {
             setHeader("Price")
-            isSortable = true
+            textAlign = ColumnTextAlign.END
             flexGrow = 3
-            key = Product::price.name
         }
 
         // Add an traffic light icon in front of availability
         // Three css classes with the same names of three availability values,
         // Available, Coming and Discontinued, are defined in shared-styles.css and are
         // used here in availabilityTemplate.
-        val availabilityTemplate = """<iron-icon icon="vaadin:circle" class-name="[[item.availability]]"></iron-icon> [[item.availability]]"""
+        val availabilityTemplate = """<vaadin-icon icon="vaadin:circle" class="${"$"}{item.availability}"></vaadin-icon> ${"$"}{item.availability}"""
         addColumn(LitRenderer.of<Product>(availabilityTemplate)
                 .withProperty("availability") { (_, _, _, _, availability) -> availability.displayableName }).apply {
             setHeader("Availability")
@@ -60,14 +53,10 @@ class ProductGrid : Grid<Product>() {
             key = Product::availability.name
         }
 
-        // To change the text alignment of the column, a template is used.
-        val stockCountTemplate = "<div style='text-align: right'>[[item.stockCount]]</div>"
-        addColumn(LitRenderer.of<Product>(stockCountTemplate)
-                .withProperty("stockCount") { (_, _, _, stockCount) -> if (stockCount == 0) "-" else Integer.toString(stockCount!!) }).apply {
+        columnFor(Product::stockCount, converter = { it ?: "-" }) {
             setHeader("Stock count")
-            isSortable = true
+            textAlign = ColumnTextAlign.END
             flexGrow = 3
-            key = Product::stockCount.name
         }
 
         // Show all categories the product is in, separated by commas
@@ -89,6 +78,16 @@ class ProductGrid : Grid<Product>() {
         }
         setDataLoader(dp)
     }
+
+    private val decimalFormat = DecimalFormat().apply {
+        maximumFractionDigits = 2
+        minimumFractionDigits = 2
+    }
+
+    /**
+     * Formats and add " €" to [amount]
+     */
+    private fun formatCurrency(amount: BigDecimal?): String = if (amount == null) "" else decimalFormat.format(amount) + " €"
 }
 
 @VaadinDsl
