@@ -32,5 +32,5 @@ The project uses the following libraries:
 
 * Based on the [Vaadin-on-Kotlin](http://vaadinonkotlin.eu) framework.
 * [Karibu-Testing](https://github.com/mvysny/karibu-testing) for testing
-* [vok-security](https://github.com/mvysny/vaadin-on-kotlin/tree/master/vok-security) for enforcing user security
-* [Vaadin](https://vaadin.com/docs/v10) for the UI
+* [vaadin-simple-security](https://github.com/mvysny/vaadin-simple-security) for enforcing user security
+* [Vaadin](https://vaadin.com/docs) for the UI
