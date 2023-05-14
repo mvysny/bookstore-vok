@@ -3,7 +3,6 @@ package eu.vok.bookstore.backend.data
 import com.github.vokorm.*
 import com.gitlab.mvysny.jdbiorm.Dao
 import org.jdbi.v3.core.mapper.reflect.ColumnName
-import java.io.Serializable
 import java.math.BigDecimal
 
 import jakarta.validation.constraints.Min
@@ -27,7 +26,7 @@ data class Product(
 
         @field:NotNull
         var availability: Availability = Availability.COMING
-) : KEntity<Int>, Serializable {
+) : KEntity<Int> {
     val isNewProduct: Boolean
         get() = id == null
 

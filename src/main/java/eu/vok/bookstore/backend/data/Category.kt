@@ -3,7 +3,6 @@ package eu.vok.bookstore.backend.data
 import com.github.vokorm.KEntity
 import com.github.vokorm.db
 import com.gitlab.mvysny.jdbiorm.Dao
-import java.io.Serializable
 
 import jakarta.validation.constraints.NotNull
 
@@ -12,7 +11,7 @@ data class Category(
 
         @field:NotNull
         var name: String? = null
-) : KEntity<Int>, Serializable {
+) : KEntity<Int> {
     override fun delete() {
         db {
             ProductCategory.deleteForCategory(id!!)
