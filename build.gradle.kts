@@ -1,28 +1,19 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-// The Beverage Buddy sample project ported to Kotlin.
-// Original project: https://github.com/vaadin/beverage-starter-flow
-
-val vaadinonkotlin_version = "0.13.0"
-val vaadin_version = "23.1.1"
+val vaadinonkotlin_version = "0.15.0"
+val vaadin_version = "24.0.5"
 
 plugins {
     kotlin("jvm") version "1.8.21"
-    id("org.gretty") version "3.0.6"
-    war
-    id("com.vaadin") version "23.1.1"
+    id("application")
+    id("com.vaadin") version "24.0.5"
 }
 
 defaultTasks("clean", "build")
 
 repositories {
     mavenCentral()
-}
-
-gretty {
-    contextPath = "/"
-    servletContainer = "jetty9.4"
 }
 
 tasks.withType<Test> {
@@ -33,15 +24,21 @@ tasks.withType<Test> {
     }
 }
 
-val staging by configurations.creating
-
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
-    implementation("eu.vaadinonkotlin:vok-framework-vokdb:$vaadinonkotlin_version")
-    implementation("eu.vaadinonkotlin:vok-security:$vaadinonkotlin_version")
+    implementation("eu.vaadinonkotlin:vok-framework-vokdb:$vaadinonkotlin_version") {
+        exclude(module = "vaadin-core")
+    }
+    implementation("com.github.mvysny.vaadin-simple-security:vaadin-simple-security:0.2")
     // Vaadin
-    implementation("com.vaadin:vaadin-core:$vaadin_version")
-    providedCompile("javax.servlet:javax.servlet-api:3.1.0")
+    implementation("com.vaadin:vaadin-core:$vaadin_version") {
+        afterEvaluate {
+            if (vaadin.productionMode) {
+                exclude(module = "vaadin-dev")
+            }
+        }
+    }
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:11.3")
 
     implementation(kotlin("stdlib-jdk8"))
 
@@ -51,39 +48,28 @@ dependencies {
 
     // db
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.flywaydb:flyway-core:8.5.12")
-    implementation("com.h2database:h2:2.1.212") // remove this and replace it with a database driver of your choice.
+    implementation("org.flywaydb:flyway-core:9.15.2")
+    implementation("com.h2database:h2:2.1.214") // remove this and replace it with a database driver of your choice.
 
     // REST
     implementation("eu.vaadinonkotlin:vok-rest:$vaadinonkotlin_version")
 
     // testing
-    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v10:1.3.16")
+    testImplementation("com.github.mvysny.kaributesting:karibu-testing-v24:2.0.2")
     testImplementation("com.github.mvysny.dynatest:dynatest-engine:0.24")
-
-    // heroku app runner
-    staging("com.heroku:webapp-runner-main:9.0.52.1")
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "11"
+    // Vaadin 24 requires JDK 17+
+    kotlinOptions.jvmTarget = "17"
 }
 
-// Heroku
-tasks {
-    val copyToLib by registering(Copy::class) {
-        into("$buildDir/server")
-        from(staging) {
-            include("webapp-runner*")
-        }
-    }
-    val stage by registering {
-        dependsOn("build", copyToLib)
-    }
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
 }
 
-vaadin {
-    if (gradle.startParameter.taskNames.contains("stage")) {
-        productionMode = true
-    }
+application {
+    mainClass.set("com.vaadin.starter.beveragebuddy.MainKt")
 }
+

@@ -3,39 +3,28 @@
 
 # Bookstore App Starter for Vaadin
 
-A project example for a Vaadin application that only requires a Servlet 3.1 container to run (no other JEE dependencies). The UI is built with Kotlin only.
+This is a [Vaadin-on-Kotlin](http://vaadinonkotlin.eu) example application,
+used to demonstrate features of the Vaadin Flow Java framework.
+A full-stack app: uses the H2 database instead of a dummy service. Requires Java 17+.
 
 The easiest way of using it is simply to git-clone this repository:
 
 ```bash
 git clone https://github.com/mvysny/bookstore-vok
 cd bookstore-vok
-./gradlew clean appRun
+./gradlew clean run
 ```
 
 The Bookstore Example will be running on http://localhost:8080
 
-## Live Demo
-
-The [Live Demo of Bookstore-VOK](https://bookstore-vok.herokuapp.com/) is running on Heroku.
-
 ## Prerequisites
 
-The project can be imported into the IDE of your choice, with Java 8 installed, as a Gradle/Kotlin project.
+The project can be imported into the IDE of your choice, with Java 17 installed, as a Gradle/Kotlin project.
 
-## Workflow
+# Documentation
 
-To compile the entire project, run `./gradlew` in the parent project.
-
-Other basic workflow steps:
-
-- getting started
-- compiling the whole project
-  - run `./gradlew` in parent project
-- developing the application
-  - edit code
-  - run `./gradlew appRun`
-  - open http://localhost:8080/
+Please see the [Vaadin Boot](https://github.com/mvysny/vaadin-boot#preparing-environment) documentation
+on how you run, develop and package this Vaadin-Boot-based app.
 
 ## Links
 
