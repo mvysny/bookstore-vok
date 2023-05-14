@@ -79,6 +79,5 @@ class Bootstrap: ServletContextListener {
     }
 }
 
-@CssImport("./css/shared-styles.css")
-@Theme(themeClass = Lumo::class, variant = Lumo.DARK)
+@Theme(value = "my-theme", variant = Lumo.DARK)
 class AppShell: AppShellConfigurator

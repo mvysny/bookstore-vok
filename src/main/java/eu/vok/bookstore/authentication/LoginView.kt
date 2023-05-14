@@ -14,7 +14,6 @@ import eu.vaadinonkotlin.vaadin.Session
  */
 @Route("login")
 @PageTitle("Login")
-@StyleSheet("./css/shared-styles.css")
 @AnonymousAllowed
 class LoginView : KComposite() {
 
