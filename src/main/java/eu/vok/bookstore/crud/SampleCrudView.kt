@@ -10,11 +10,7 @@ import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.value.ValueChangeMode
-import com.vaadin.flow.router.BeforeEvent
-import com.vaadin.flow.router.HasUrlParameter
-import com.vaadin.flow.router.OptionalParameter
-import com.vaadin.flow.router.Route
-import com.vaadin.flow.router.RouteAlias
+import com.vaadin.flow.router.*
 import eu.vaadinonkotlin.vaadin.Session
 import eu.vok.bookstore.MainLayout
 import eu.vok.bookstore.authentication.loginManager
@@ -24,8 +20,9 @@ import jakarta.annotation.security.PermitAll
 /**
  * A view for performing create-read-update-delete operations on products.
  */
-@Route(value = "Inventory", layout = MainLayout::class)
+@Route(value = "inventory", layout = MainLayout::class)
 @RouteAlias(value = "", layout = MainLayout::class)
+@PageTitle("Inventory")
 @PermitAll
 class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
     private lateinit var grid: ProductGrid

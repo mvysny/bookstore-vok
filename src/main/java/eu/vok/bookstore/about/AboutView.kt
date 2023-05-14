@@ -8,7 +8,7 @@ import com.vaadin.flow.router.Route
 import eu.vok.bookstore.MainLayout
 import jakarta.annotation.security.PermitAll
 
-@Route(value = "About", layout = MainLayout::class)
+@Route(value = "about", layout = MainLayout::class)
 @PageTitle("About")
 @PermitAll
 class AboutView : KComposite() {
