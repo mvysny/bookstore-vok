@@ -7,6 +7,7 @@ import com.github.mvysny.kaributools.shortcut
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.Key
 import com.vaadin.flow.component.button.Button
+import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.html.Span
 import com.vaadin.flow.data.binder.BeanValidationBinder
 import com.vaadin.flow.data.converter.StringToBigDecimalConverter
@@ -62,9 +63,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
     }
 
     private val root = ui {
-        div {
-            className = "product-form"
-
+        div(classNames = "product-form") {
             verticalLayout {
                 width = "400px"
 
@@ -131,7 +130,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
 
                 delete = button("Delete") {
                     width = "100%"; setPrimary()
-                    element.themeList.add("error")
+                    addThemeVariants(ButtonVariant.LUMO_ERROR)
                     onLeftClick {
                         listener.delete(currentProduct)
                     }

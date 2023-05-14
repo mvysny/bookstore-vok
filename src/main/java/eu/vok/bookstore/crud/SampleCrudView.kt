@@ -7,7 +7,6 @@ import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.component.orderedlayout.FlexComponent
-import com.vaadin.flow.component.orderedlayout.HorizontalLayout
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.*
@@ -24,9 +23,9 @@ import jakarta.annotation.security.PermitAll
 @RouteAlias(value = "", layout = MainLayout::class)
 @PageTitle("Inventory")
 @PermitAll
-class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
+class SampleCrudView : KComposite(), HasUrlParameter<String> {
     private lateinit var grid: ProductGrid
-    private val form: ProductForm
+    private lateinit var form: ProductForm
     private lateinit var filter: TextField
 
     private var newProduct: Button? = null
@@ -59,47 +58,52 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
         }
 
         override fun discardChanges(bean: Product) {
-            edit(bean)
+            showOrEdit(bean)
+        }
+    }
+
+    private val root = ui {
+        horizontalLayout(isSpacing = false) {
+            content { center() }
+            setSizeFull()
+
+            verticalLayout {
+                setSizeFull()
+
+                horizontalLayout {
+                    // top bar
+                    width = "100%"
+
+                    filter = textField {
+                        placeholder = "Filter name, availability or category"
+                        addValueChangeListener { event -> grid.setFilter(event.value) }
+                        valueChangeMode = ValueChangeMode.EAGER
+                        isExpand = true
+                    }
+                    setVerticalComponentAlignment(
+                        FlexComponent.Alignment.START,
+                        filter
+                    )
+                    newProduct =
+                        button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
+                            setPrimary()
+                            onLeftClick { newProduct() }
+                        }
+                }
+                grid = productGrid {
+                    asSingleSelect().addValueChangeListener { event ->
+                        showOrEdit(event.value)
+                    }
+                    isExpand = true
+                }
+            }
+            form = productForm(formListener)
         }
     }
 
     init {
-        setSizeFull()
-
-        verticalLayout {
-            setSizeFull()
-
-            horizontalLayout {
-                // top bar
-                width = "100%"
-
-                filter = textField {
-                    placeholder = "Filter name, availability or category"
-                    addValueChangeListener { event -> grid.setFilter(event.value) }
-                    valueChangeMode = ValueChangeMode.EAGER
-                    isExpand = true
-                }
-                setVerticalComponentAlignment(FlexComponent.Alignment.START, filter)
-                newProduct = button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
-                    setPrimary()
-                    onLeftClick { newProduct() }
-                }
-            }
-            grid = productGrid {
-                asSingleSelect().addValueChangeListener { event ->
-                    if (Session.loginManager.isAdmin()) {
-                        edit(event.value)
-                    }
-                }
-                isExpand = true
-            }
-        }
-        form = productForm(formListener)
-
-        edit(null)
-        if (!Session.loginManager.isAdmin()) {
-            newProduct!!.isEnabled = false
-        }
+        showOrEdit(null)
+        newProduct!!.isEnabled = Session.loginManager.isAdmin()
     }
 
     private fun showSaveNotification(msg: String) {
@@ -114,7 +118,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
         grid.selectionModel.select(row)
     }
 
-    private fun edit(product: Product?) {
+    private fun showOrEdit(product: Product?) {
         if (product == null) {
             setFragmentParameter("")
         } else {
@@ -130,7 +134,7 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
 
     private fun showForm(show: Boolean) {
         form.isVisible = show
-        form.element.isEnabled = show
+        form.element.isEnabled = Session.loginManager.isAdmin()
     }
 
     private fun newProduct() {
@@ -153,8 +157,6 @@ class SampleCrudView : HorizontalLayout(), HasUrlParameter<String> {
                 } catch (e: NumberFormatException) {
                 }
             }
-        } else {
-            showForm(false)
         }
     }
 
