@@ -17,6 +17,10 @@ cd bookstore-vok
 
 The Bookstore Example will be running on http://localhost:8080
 
+## Live Demo
+
+[Live Demo](https://v-herd.eu/bookstore-vok).
+
 ## Prerequisites
 
 The project can be imported into the IDE of your choice, with Java 17 installed, as a Gradle/Kotlin project.
