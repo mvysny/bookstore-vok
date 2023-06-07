@@ -5,9 +5,6 @@ classes
 local.properties
 *.iml
 out
-node_modules
 target
-vite.generated.ts
-.npmrc
 frontend/generated
 !src/main/dev-bundle/webapp/VAADIN/build
