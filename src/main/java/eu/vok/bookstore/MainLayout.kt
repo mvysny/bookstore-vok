@@ -1,17 +1,17 @@
 package eu.vok.bookstore
 
 import com.github.mvysny.karibudsl.v10.*
+import com.github.mvysny.karibudsl.v23.route
+import com.github.mvysny.karibudsl.v23.sideNav
 import com.vaadin.flow.component.HasElement
 import com.vaadin.flow.component.button.ButtonVariant
 import com.vaadin.flow.component.html.Div
 import com.vaadin.flow.component.icon.VaadinIcon
-import com.vaadin.flow.component.notification.Notification
 import com.vaadin.flow.router.RouterLayout
 import eu.vaadinonkotlin.vaadin.Session
 import eu.vok.bookstore.about.AboutView
 import eu.vok.bookstore.authentication.loginManager
 import eu.vok.bookstore.crud.SampleCrudView
-import eu.vok.bookstore.utils.navMenuBar
 
 /**
  * The layout of the pages e.g. About and Inventory.
@@ -31,9 +31,9 @@ class MainLayout : KComposite(), RouterLayout {
                 }
             }
             drawer {
-                navMenuBar {
-                    addRoute(VaadinIcon.EDIT, SampleCrudView::class)
-                    addRoute(VaadinIcon.INFO_CIRCLE, AboutView::class)
+                sideNav {
+                    route(SampleCrudView::class, VaadinIcon.EDIT)
+                    route(AboutView::class, VaadinIcon.INFO_CIRCLE)
                 }
                 // logout menu item
                 horizontalLayout(isPadding = true) {
