@@ -1,13 +1,10 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val vaadinonkotlin_version = "0.15.0"
-val vaadin_version = "24.1.0"
-
 plugins {
     kotlin("jvm") version "1.8.21"
     id("application")
-    id("com.vaadin") version "24.1.0"
+    id("com.vaadin")
 }
 
 defaultTasks("clean", "build")
@@ -26,13 +23,13 @@ tasks.withType<Test> {
 
 dependencies {
     // Vaadin-on-Kotlin dependency, includes Vaadin
-    implementation("eu.vaadinonkotlin:vok-framework-vokdb:$vaadinonkotlin_version") {
+    implementation("eu.vaadinonkotlin:vok-framework-vokdb:${project.properties["vokVersion"]}") {
         exclude(module = "vaadin-core")
     }
-    implementation("com.github.mvysny.karibudsl:karibu-dsl-v23:2.0.1")
+    implementation("com.github.mvysny.karibudsl:karibu-dsl-v23:${project.properties["karibuDslVersion"]}")
     implementation("com.github.mvysny.vaadin-simple-security:vaadin-simple-security:0.2")
     // Vaadin
-    implementation("com.vaadin:vaadin-core:$vaadin_version") {
+    implementation("com.vaadin:vaadin-core:${project.properties["vaadinVersion"]}") {
         afterEvaluate {
             if (vaadin.productionMode) {
                 exclude(module = "vaadin-dev")
