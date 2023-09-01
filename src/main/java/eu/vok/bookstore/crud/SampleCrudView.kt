@@ -63,7 +63,7 @@ class SampleCrudView : KComposite(), HasUrlParameter<String> {
     }
 
     private val root = ui {
-        horizontalLayout(isSpacing = false) {
+        horizontalLayout(spacing = false) {
             content { center() }
             setSizeFull()
 
