@@ -36,7 +36,7 @@ dependencies {
             }
         }
     }
-    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.0")
+    implementation("com.github.mvysny.vaadin-boot:vaadin-boot:12.1")
 
     implementation(kotlin("stdlib-jdk8"))
 
@@ -46,8 +46,8 @@ dependencies {
 
     // db
     implementation("com.zaxxer:HikariCP:5.0.1")
-    implementation("org.flywaydb:flyway-core:9.22.0")
-    implementation("com.h2database:h2:2.2.222") // remove this and replace it with a database driver of your choice.
+    implementation("org.flywaydb:flyway-core:9.22.1")
+    implementation("com.h2database:h2:2.2.224") // remove this and replace it with a database driver of your choice.
 
     // testing
     testImplementation("com.github.mvysny.kaributesting:karibu-testing-v24:2.1.0")
@@ -65,5 +65,5 @@ java {
 }
 
 application {
-    mainClass.set("eu.vok.bookstore.MainKt")
+    mainClass = "eu.vok.bookstore.MainKt"
 }
