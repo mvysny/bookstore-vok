@@ -1,12 +1,12 @@
 package eu.vok.bookstore
 
+import com.gitlab.mvysny.jdbiorm.JdbiOrm
 import com.vaadin.flow.component.page.AppShellConfigurator
 import com.vaadin.flow.theme.Theme
 import com.vaadin.flow.theme.lumo.Lumo
 import com.zaxxer.hikari.HikariConfig
 import com.zaxxer.hikari.HikariDataSource
 import eu.vaadinonkotlin.VaadinOnKotlin
-import eu.vaadinonkotlin.vokdb.dataSource
 import eu.vok.bookstore.authentication.User
 import eu.vok.bookstore.backend.mock.MockDataGenerator
 import jakarta.servlet.ServletContextEvent
@@ -39,7 +39,7 @@ class Bootstrap: ServletContextListener {
             username = "sa"
             password = ""
         }
-        VaadinOnKotlin.dataSource = HikariDataSource(cfg)
+        JdbiOrm.setDataSource(HikariDataSource(cfg))
 
         // Initializes the VoK framework
         log.info("Initializing VaadinOnKotlin")
@@ -48,7 +48,7 @@ class Bootstrap: ServletContextListener {
         // Makes sure the database is up-to-date
         log.info("Running DB migrations")
         val flyway: Flyway = Flyway.configure()
-            .dataSource(VaadinOnKotlin.dataSource)
+            .dataSource(JdbiOrm.getDataSource())
             .load()
         flyway.migrate()
 

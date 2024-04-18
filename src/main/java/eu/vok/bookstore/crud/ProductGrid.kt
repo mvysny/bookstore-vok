@@ -3,14 +3,14 @@ package eu.vok.bookstore.crud
 import com.github.mvysny.karibudsl.v10.VaadinDsl
 import com.github.mvysny.karibudsl.v10.columnFor
 import com.github.mvysny.karibudsl.v10.init
-import com.github.mvysny.vokdataloader.DataLoader
-import com.github.mvysny.vokdataloader.withFilter
-import com.github.vokorm.dataloader.dataLoader
+import com.github.vokorm.buildCondition
+import com.github.vokorm.or
+import com.gitlab.mvysny.jdbiorm.vaadin.EntityDataProvider
 import com.vaadin.flow.component.HasComponents
 import com.vaadin.flow.component.grid.ColumnTextAlign
 import com.vaadin.flow.component.grid.Grid
 import com.vaadin.flow.data.renderer.LitRenderer
-import eu.vaadinonkotlin.vaadin.vokdb.setDataLoader
+import eu.vaadinonkotlin.vaadin.vokdb.dataProvider
 import eu.vok.bookstore.backend.data.Product
 import java.math.BigDecimal
 import java.text.DecimalFormat
@@ -71,12 +71,11 @@ class ProductGrid : Grid<Product>() {
     private fun formatCategories(product: Product): String = product.category.map { it.name!! }.sorted().joinToString()
 
     fun setFilter(filter: String) {
-        @Suppress("UNCHECKED_CAST")
-        var dp: DataLoader<Product> = Product.dataLoader
+        val dp: EntityDataProvider<Product> = Product.dataProvider
         if (filter.isNotBlank()) {
-            dp = dp.withFilter { (Product::productName istartsWith filter.trim()) or ("availability ilike :a"("a" to filter.trim() + "%")) }
+            dp.filter = buildCondition<Product> { (Product::productName likeIgnoreCase "${filter.trim()}%") or ("availability ilike :a"("a" to filter.trim() + "%")) }
         }
-        setDataLoader(dp)
+        dataProvider = dp
     }
 
     private val decimalFormat = DecimalFormat().apply {
