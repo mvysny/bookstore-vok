@@ -1,6 +1,6 @@
 package eu.vok.bookstore
 
-import com.github.mvysny.vaadinsimplesecurity.SimpleViewAccessChecker
+import com.github.mvysny.vaadinsimplesecurity.SimpleNavigationAccessControl
 import com.vaadin.flow.server.ServiceInitEvent
 import com.vaadin.flow.server.VaadinServiceInitListener
 import eu.vaadinonkotlin.vaadin.Session
@@ -14,7 +14,7 @@ import eu.vok.bookstore.authentication.loginManager
  * `com.vaadin.flow.server.VaadinServiceInitListener` in `META-INF/services`.
  */
 class BookstoreInitListener : VaadinServiceInitListener {
-    private val checker = SimpleViewAccessChecker.usingService { Session.loginManager }
+    private val checker = SimpleNavigationAccessControl.usingService { Session.loginManager }
     init {
         checker.setLoginView(LoginView::class.java)
     }
