@@ -2,7 +2,7 @@ import org.gradle.api.tasks.testing.logging.TestExceptionFormat
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "1.9.23"
+    kotlin("jvm") version "2.0.20"
     application
     alias(libs.plugins.vaadin)
 }
@@ -50,6 +50,7 @@ dependencies {
     // testing
     testImplementation(libs.karibu.testing)
     testImplementation(libs.dynatest)
+    testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
 tasks.withType<KotlinCompile> {
