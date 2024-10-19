@@ -1,13 +1,10 @@
 package eu.vok.bookstore.backend.data
 
-import com.github.mvysny.dynatest.DynaTest
-import com.github.mvysny.kaributesting.v10.expectList
-import eu.vok.bookstore.usingDB
-import kotlin.test.expect
+import eu.vok.bookstore.AbstractDBTests
+import org.junit.jupiter.api.Test
 
-class CategoryTest : DynaTest({
-    usingDB()
-    test("smoke") {
+class CategoryTest : AbstractDBTests() {
+    @Test fun smoke() {
         Category.getAllForProduct(2)
     }
-})
+}
