@@ -96,12 +96,12 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
                 comboBox<Availability>("Availability") {
                     width = "100%"
                     isRequired = true
-                    setItems(*Availability.values())
+                    setItems(Availability.entries)
                     isAllowCustomValue = false
                     bind(binder).bind(Product::availability)
                 }
 
-                val categoryLabel = label("Categories") {
+                val categoryLabel = nativeLabel("Categories") {
                     className = "vaadin-label"
                 }
 
