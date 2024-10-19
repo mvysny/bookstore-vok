@@ -50,7 +50,6 @@ dependencies {
     // testing
     testImplementation(libs.karibu.testing)
     testImplementation(libs.junit)
-    testImplementation(libs.dynatest)
     testRuntimeOnly("org.junit.platform:junit-platform-launcher")
 }
 
