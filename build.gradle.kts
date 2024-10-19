@@ -1,4 +1,5 @@
 import org.gradle.api.tasks.testing.logging.TestExceptionFormat
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -16,7 +17,6 @@ repositories {
 tasks.withType<Test> {
     useJUnitPlatform()
     testLogging {
-        // to see the exceptions of failed tests in Travis-CI console.
         exceptionFormat = TestExceptionFormat.FULL
     }
 }
@@ -55,7 +55,7 @@ dependencies {
 
 tasks.withType<KotlinCompile> {
     // Vaadin 24 requires JDK 17+
-    kotlinOptions.jvmTarget = "17"
+    compilerOptions.jvmTarget = JvmTarget.JVM_17
 }
 
 java {
