@@ -6,7 +6,6 @@ import com.vaadin.flow.component.UI
 import com.vaadin.flow.component.button.Button
 import com.vaadin.flow.component.icon.VaadinIcon
 import com.vaadin.flow.component.notification.Notification
-import com.vaadin.flow.component.orderedlayout.FlexComponent
 import com.vaadin.flow.component.textfield.TextField
 import com.vaadin.flow.data.value.ValueChangeMode
 import com.vaadin.flow.router.*
@@ -82,7 +81,7 @@ class SampleCrudView : KComposite(), HasUrlParameter<String> {
                     }
                     newProduct = button("New product", VaadinIcon.PLUS_CIRCLE.create()) {
                         setPrimary()
-                        onLeftClick { newProduct() }
+                        onClick { createNewProduct() }
                     }
                 }
                 grid = productGrid {
@@ -132,7 +131,7 @@ class SampleCrudView : KComposite(), HasUrlParameter<String> {
         form.element.isEnabled = Session.loginManager.isAdmin()
     }
 
-    private fun newProduct() {
+    private fun createNewProduct() {
         clearSelection()
         setFragmentParameter("new")
         editProduct(Product())
@@ -141,7 +140,7 @@ class SampleCrudView : KComposite(), HasUrlParameter<String> {
     override fun setParameter(event: BeforeEvent, @OptionalParameter parameter: String?) {
         if (!parameter.isNullOrEmpty()) {
             if (parameter == "new") {
-                newProduct()
+                createNewProduct()
             } else {
                 // Ensure this is selected even if coming directly here from
                 // login

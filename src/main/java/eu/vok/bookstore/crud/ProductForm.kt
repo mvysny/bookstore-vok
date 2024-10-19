@@ -116,7 +116,7 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
 
                 save = button("Save") {
                     width = "100%"; setPrimary()
-                    onLeftClick {
+                    onClick {
                         if (binder.writeBeanIfValid(currentProduct)) {
                             listener.save(currentProduct)
                         }
@@ -125,13 +125,13 @@ class ProductForm(private val listener: FormListener<Product>) : KComposite() {
 
                 discard = button("Discard changes") {
                     width = "100%"
-                    onLeftClick { listener.discardChanges(currentProduct) }
+                    onClick { listener.discardChanges(currentProduct) }
                 }
 
                 delete = button("Delete") {
                     width = "100%"; setPrimary()
                     addThemeVariants(ButtonVariant.LUMO_ERROR)
-                    onLeftClick {
+                    onClick {
                         listener.delete(currentProduct)
                     }
                 }

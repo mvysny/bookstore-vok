@@ -39,7 +39,7 @@ class MainLayout : KComposite(), RouterLayout {
                 horizontalLayout(padding = true) {
                     button("Logout", VaadinIcon.SIGN_OUT.create()) {
                         addThemeVariants(ButtonVariant.LUMO_TERTIARY_INLINE)
-                        onLeftClick {
+                        onClick {
                             Session.loginManager.logout()
                         }
                     }
