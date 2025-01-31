@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    kotlin("jvm") version "2.1.0"
+    kotlin("jvm") version "2.1.10"
     application
     alias(libs.plugins.vaadin)
 }
@@ -35,8 +35,6 @@ dependencies {
         }
     }
     implementation(libs.vaadin.boot)
-
-    implementation(kotlin("stdlib-jdk8"))
 
     // logging
     // currently we are logging through the SLF4J API to SLF4J-Simple. See src/main/resources/simplelogger.properties file for the logger configuration
